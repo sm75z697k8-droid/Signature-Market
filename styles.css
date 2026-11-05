@@ -205,7 +205,8 @@ a { color: inherit; }
 }
 .search-form:focus-within { border-color:#7db290; box-shadow:0 0 0 3px rgba(77,140,97,.1); }
 .search-form > svg { width:19px; height:19px; flex:none; fill:none; stroke:#77887c; stroke-width:1.8; stroke-linecap:round; }
-.search-form input { flex:1; width:0; min-width:0; border:0; outline:0; background:transparent; color:var(--app-ink); font-size:14px; }
+/* 16px avoids iOS Safari auto-zoom when this search field receives focus. */
+.search-form input { flex:1; width:0; min-width:0; border:0; outline:0; background:transparent; color:var(--app-ink); font-size:16px; }
 .search-form input::placeholder { color:#94a29a; }
 .search-form input::-webkit-search-cancel-button { display:none; }
 .search-clear { border:0; background:transparent; width:27px; height:38px; font-size:24px; color:#738076; }

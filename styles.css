@@ -100,7 +100,18 @@ body {
   outline-offset: -3px;
 }
 
+/* Two matching, soft-rounded SVG states. The filled glyph fades in only
+   when JavaScript confirms the moving glass pill has reached its destination. */
+.nav-glyph {
+  position: relative;
+  display: block;
+  width: 23px;
+  height: 23px;
+  transition: transform 190ms ease;
+}
 .nav-icon {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 23px;
   height: 23px;
@@ -111,10 +122,18 @@ body {
   stroke-linejoin: round;
   -webkit-user-drag: none;
   pointer-events: none;
-  transition: transform 220ms ease;
+  transition: opacity 180ms ease, transform 240ms cubic-bezier(.2, 1, .36, 1);
 }
-
-.nav-item:active .nav-icon { transform: scale(.92); }
+.nav-icon-outline { opacity: 1; transform: scale(1); }
+.nav-icon-solid {
+  opacity: 0;
+  fill: currentColor;
+  stroke: none;
+  transform: scale(.88);
+}
+.nav-item.is-filled .nav-icon-outline { opacity: 0; transform: scale(.9); }
+.nav-item.is-filled .nav-icon-solid { opacity: 1; transform: scale(1); }
+.nav-item:active .nav-glyph { transform: scale(.94); }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .floating-nav { background: rgba(250, 252, 250, .94); }
@@ -129,7 +148,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nav-indicator, .nav-item, .nav-icon, .nav-bubble { transition: none; animation: none; }
+  .nav-indicator, .nav-item, .nav-glyph, .nav-icon, .nav-bubble { transition: none; animation: none; }
 }
 
 @media (max-width: 340px) {

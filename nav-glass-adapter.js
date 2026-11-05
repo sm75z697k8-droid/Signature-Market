@@ -18,6 +18,13 @@
   const pill = nav?.querySelector("glass-element.nav-bubble");
   if (!nav || !capsule || !pill || !customElements.get("glass-element")) return;
 
+  // iPhone Chrome and Safari both use WebKit, and the author's component
+  // already falls back to blur there. Do not repeatedly rebuild that blur
+  // when the dock resizes: a percentage-sized shadow box can simply follow it.
+  const ua = navigator.userAgent.toLowerCase();
+  const isChromiumWithSVGFilter = /chrome|chromium|edg/.test(ua) &&
+    !/iphone|ipad|ipod|crios|edgios/.test(ua);
+
   function fitShadowBox(element) {
     const box = element.shadowRoot?.querySelector(".glass-box");
     if (!box) return;
@@ -55,7 +62,16 @@
   };
 
   nav.addEventListener("transitionend", event => {
-    if (event.target === nav && event.propertyName === "width") syncSize();
+    if (event.target !== nav || event.propertyName !== "width") return;
+    if (isChromiumWithSVGFilter) {
+      // The original SVG displacement map is size-dependent. Rebuild it
+      // once, after the width transition, never on each animation frame.
+      syncSize();
+    } else {
+      // Preserve WebKit's existing glass boxes to avoid a visible blink.
+      fitShadowBox(capsule);
+      fitShadowBox(pill);
+    }
   });
   window.addEventListener("resize", scheduleAfterViewportResize, { passive: true });
   window.addEventListener("orientationchange", scheduleAfterViewportResize, { passive: true });

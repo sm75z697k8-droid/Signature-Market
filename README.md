@@ -1,53 +1,59 @@
-# Signature Market — Shopping App Redesign Concept
+# Signature Market · Responsive Shopping Web App
 
-An **unofficial, mobile-first UI exploration** for [Signature Market](https://www.signaturemarket.co/my/marketplace/), inspired by Apple's calm layouts, soft surfaces, rounded shapes, and restrained translucency.
+An **unofficial, responsive online shopping website concept** for Signature Market. The design draws inspiration from modern Apple web interfaces: generous whitespace, subtle translucency, soft green surfaces, oversized editorial banners, rounded cards, and clear shopping flows.
 
-## Run it
+> **Not an official Signature Market website.** This is a front-end demonstration. All products, packshot illustrations (emojis), prices and notifications are sample data. The website does not connect to real accounts, inventory, payments or fulfillment.
 
-No dependencies or build tools are required.
+## Preview locally
 
-1. Clone or download this repository.
-2. Open `index.html` in a browser.
-3. For a local server, run `python3 -m http.server 8000` and open `http://localhost:8000`.
+This is a **vanilla HTML, CSS and JavaScript web app** with no dependencies or build step.
 
-It works on mobile and desktop, but is designed mobile-first. A browser's device emulator is useful for reviewing the floating bar.
+1. Clone this repository and check out the `feat/responsive-shopping-web-app` branch.
+2. Open `index.html` directly in a browser, or start a local server:
 
-## Navigation design decision
+```bash
+python3 -m http.server 8000
+```
 
-**Four primary destinations in a floating bottom pill:**
+3. Visit [http://localhost:8000](http://localhost:8000).
 
-- **Home** — offers and discovery
-- **Products** — browsing, search and category filters
-- **My Cart** — purchase progress
-- **Profile** — account entry point
+Use a desktop and a phone (or responsive device emulator) to review both layouts.
 
-**Notifications** use a bell in the top-right header, with an unread indicator. They remain globally accessible without taking up a primary tab. This creates more touch space and keeps the key shopping journeys one tap away.
+## What the site does
 
-## What works in this prototype
+- **Home:** desktop hero, browsing categories, featured products and an editorial section.
+- **Products:** search by name or category, filter by category, browse cards and open a product quick view.
+- **My Cart:** add products, adjust quantities, remove items, view item counts and subtotal.
+- **Profile:** demo account entry page with clearly labeled unavailable sign-in functionality.
+- **Notifications:** accessible panel opened from the header bell; sample notifications can be marked as read.
+- **Cart and notification state:** saved in browser localStorage when available.
+- **Deep links:** `#home`, `#products`, `#cart` and `#profile`; browser back/forward works.
 
-- Navigation with active state, matching screen content and accessible labels.
-- Bottom navigation that respects mobile safe areas.
-- Product search and category filters.
-- Add-to-cart, item counts, quantity controls, calculated subtotal, and empty-cart view.
-- Demo cart saved in the browser's local storage.
-- Notification bottom sheet with close, Escape key, focus handling, unread indicator, and mark-as-read.
-- Mobile-first layout, visible keyboard focus and reduced-motion support.
+## Responsive navigation
 
-## Not yet connected
+| Desktop / tablet (768px+) | Mobile (under 768px) |
+| --- | --- |
+| Sticky header with **Home** and **Shop products** links | Sticky compact brand header |
+| Search, Notifications, Cart and Profile actions on the right | Notification bell in header |
+| Footer with site links | Floating four-tab bottom navigation: Home, Products, My Cart, Profile |
+| Four-column catalogue and category grid | Two-column catalogue and category grid |
 
-This is a **front-end concept, not a live e-commerce application**.
+Notifications are in the top header rather than a fifth tab, keeping the primary mobile commerce actions spacious. On desktop, a full-width header is more natural for a website than a floating bottom bar.
 
-- Product names, prices, emojis, promotions and notifications are illustrative sample content. Don't rely on them for real inventory or pricing.
-- Checkout and authentication are not connected to a server.
-- Cart and notification state are stored only in this browser.
-- Replace the placeholder artwork and content with approved brand assets and live APIs before production use.
+## Project structure
 
-## Files
+- `index.html`: semantic page structure, site header, navigation, content sections, footer and dialogs.
+- `styles.css`: theme, responsive layouts, hover and focus states and mobile-safe-area support.
+- `app.js`: client-side hash routing, search, filters, cart, product quick view and notification interactions.
 
-- `index.html` — semantic page structure and navigation
-- `styles.css` — visual design and responsive layout
-- `app.js` — page switching and prototype interactions
+## Future production integrations
 
-## Suggested next steps
+- Replace demo inventory and pricing with a real product API.
+- Add real product packshots, ingredient, allergen and nutritional information.
+- Implement authentication, orders, checkout, payment, shipping and stock validation.
+- Add automated tests, accessibility audits and proper deployment infrastructure.
+- Obtain authorization for any official brand assets or live commerce integrations.
 
-Connect real product data; add product detail pages; improve account and checkout journeys; then test the bottom navigation with customers. Evaluate whether shoppers prefer a four-tab bottom bar with a notification bell or a five-tab layout before finalizing the design.
+## Publishing a static preview
+
+Because no build step is needed, this prototype can be hosted on GitHub Pages or any static web host. Enable GitHub Pages in the repository's **Settings → Pages** when ready, choose the branch and root folder, and wait for GitHub to publish the preview. The `#products`, `#cart`, and other hash links do not require server-side route rewrites.

@@ -187,7 +187,7 @@
     });
 
     // A single indicator moves horizontally beneath all five tabs.
-    nav.style.setProperty("--active-index", String(routes.indexOf(route)));
+    nav.style.setProperty("--active-translate", String(routes.indexOf(route) * 100) + "%");
     if (switchingTabs && !reducedMotion) {
       nav.classList.remove("is-moving");
       // Restart the subtle highlight if taps occur rapidly mid-transition.

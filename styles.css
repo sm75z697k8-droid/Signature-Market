@@ -6,6 +6,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body { min-height: 100%; margin: 0; }
+/* manipulation prevents double-tap zoom while preserving one-finger scrolling. */
+html { touch-action: manipulation; }
 
 body {
   min-height: 100vh;
@@ -42,6 +44,11 @@ body {
     0 9px 26px rgba(45, 65, 48, .10),
     inset 0 1px 1px rgba(255, 255, 255, .76);
   isolation: isolate;
+  /* Treat this as an app control, not a selectable Safari link. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 /* The indicator travels; its child stretches independently like a soft bubble.
@@ -102,6 +109,8 @@ body {
   stroke-width: 1.45;
   stroke-linecap: round;
   stroke-linejoin: round;
+  -webkit-user-drag: none;
+  pointer-events: none;
   transition: transform 220ms ease;
 }
 

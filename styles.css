@@ -133,6 +133,8 @@ h1 em { color: var(--green); font-style: normal; }
    on the web, so translucent layers, edge light and a moving glass lens provide the feel. */
 .floating-nav {
   --active-translate: 0%;
+  --glass-light-x: 50%;
+  --glass-light-y: 0%;
   position: fixed;
   z-index: 50;
   left: 50%;
@@ -157,6 +159,23 @@ h1 em { color: var(--green); font-style: normal; }
   isolation: isolate;
   -webkit-transform: translateX(-50%);
 }
+/* The translucent layer is the Safari-safe material. On desktop Chromium
+   liquid-glass.js can add an actual SVG-displaced backdrop below the controls. */
+.floating-nav.has-refraction {
+  background: linear-gradient(140deg, rgba(255,255,255,.23), rgba(237,249,243,.18));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.nav-refraction {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  inset: 1px;
+  border-radius: inherit;
+  background: rgba(255,255,255,.11);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.62);
+  overflow: hidden;
+}
 .floating-nav::before,
 .floating-nav::after {
   content: "";
@@ -173,8 +192,11 @@ h1 em { color: var(--green); font-style: normal; }
 .floating-nav::after {
   inset: 0;
   background:
-    radial-gradient(ellipse 45% 50% at 14% -12%, rgba(255, 255, 255, .66), transparent),
+    radial-gradient(ellipse 120px 90px at var(--glass-light-x) var(--glass-light-y),
+      rgba(255,255,255,.76) 0%, rgba(255,255,255,.2) 45%, transparent 82%),
+    radial-gradient(ellipse 45% 50% at 14% -12%, rgba(255, 255, 255, .62), transparent),
     radial-gradient(ellipse 40% 64% at 90% 120%, rgba(255, 255, 255, .34), transparent);
+  opacity: .75;
 }
 .nav-indicator {
   position: absolute;
@@ -304,7 +326,8 @@ h1 em { color: var(--green); font-style: normal; }
   .nav-indicator { background: #dcefe3; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .floating-nav { background: #f9fcf9; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .floating-nav, .floating-nav.has-refraction { background: #f9fcf9; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .nav-refraction { display: none; }
   .nav-indicator { background: #dcefe3; -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 .toast { position: fixed; z-index: 70; bottom: calc(100px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); background: #234b35; border-radius: 100px; padding: 12px 20px; color: white; box-shadow: var(--shadow); font-size: 12px; font-weight: 700; white-space: nowrap; max-width: calc(100vw - 38px); text-align: center; }

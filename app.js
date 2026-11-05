@@ -38,6 +38,9 @@
   let cart = loadCart();
   let category = "all";
   let activeRoute = "home";
+  let hasRenderedRoute = false;
+  let glassMotionTimer;
+  const tabSymbols = { home: "home", products: "grid", alerts: "bell", cart: "bag", profile: "user" };
   let focusSearchOnOpen = false;
   let toastTimer;
   const scrollPositions = Object.fromEntries(routes.map(route => [route, 0]));
@@ -164,7 +167,15 @@
 
   function showRoute() {
     const route = currentRoute();
+    const switchingTabs = hasRenderedRoute && route !== activeRoute;
+    const nav = document.querySelector(".floating-nav");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     if (route !== activeRoute) scrollPositions[activeRoute] = window.scrollY;
+
+    // Do not sweep across the whole bar when opening a deep link for the first time.
+    if (!hasRenderedRoute) nav.classList.add("nav-initializing");
+
     document.querySelectorAll(".view").forEach(section => {
       section.hidden = section.dataset.view !== route;
     });
@@ -173,7 +184,27 @@
       link.classList.toggle("active", selected);
       if (selected) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
+
+      // Change the SVG symbol, rather than drawing a thick outline to fake a filled icon.
+      const symbol = link.querySelector(".nav-icon use");
+      if (symbol) symbol.setAttribute("href", "#i-" + tabSymbols[link.dataset.route] + (selected ? "-fill" : ""));
     });
+
+    // A single indicator moves horizontally beneath all five tabs.
+    nav.style.setProperty("--active-index", String(routes.indexOf(route)));
+    if (switchingTabs && !reducedMotion) {
+      nav.classList.remove("is-moving");
+      // Restart the subtle highlight if taps occur rapidly mid-transition.
+      void nav.offsetWidth;
+      nav.classList.add("is-moving");
+      clearTimeout(glassMotionTimer);
+      glassMotionTimer = setTimeout(() => nav.classList.remove("is-moving"), 540);
+    }
+    if (!hasRenderedRoute) {
+      hasRenderedRoute = true;
+      requestAnimationFrame(() => nav.classList.remove("nav-initializing"));
+    }
+
     activeRoute = route;
     if (route === "cart") renderCart();
     document.title = (route === "home" ? "Home" : route === "alerts" ? "Notifications" : route[0].toUpperCase() + route.slice(1)) +

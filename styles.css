@@ -129,167 +129,121 @@ h1 em { color: var(--green); font-style: normal; }
 .profile-links small { display: block; margin-top: 5px; font-weight: 400; font-size: 10px; color: #8b9589; }
 .link-arrow { width: 15px; height: 15px; color: #899b8e; }
 .concept-footer { text-align: center; color: #a3aaa0; font-size: 10px; line-height: 1.55; margin: 32px 0 0; padding: 0 12px; }
-/* Two-layer glass dock.
-   The unmodified srdavo <glass-element> provides both the soft capsule and
-   the separate refractive selection bubble, with Safari's blur fallback.
-   Layout and animation remain ordinary CSS for smooth iPhone navigation. */
+/*
+ * Reference-matched minimal dock.
+ * The optical glass effect comes ONLY from the UNMODIFIED two upstream
+ * srdavo/liquid-glass JavaScript files and their <glass-element> elements.
+ * No extra simulated refraction, gradient lenses, or CSS backdrop-filter
+ * stacks are applied to the nav. CSS controls position, shape, and motion.
+ */
 .floating-nav {
   --active-translate: 0%;
+  --dock-edge-gap: clamp(24px, 6.5vw, 40px);
+  box-sizing: border-box;
   position: fixed;
   z-index: 50;
   left: 50%;
-  bottom: calc(2px + env(safe-area-inset-bottom, 0px));
-  /* Expanded by default; scroll down to collapse, scroll up to expand. */
-  width: min(calc(100% - 18px), 540px);
-  height: 54px;
-  transition:
-    width 580ms cubic-bezier(.20, .92, .26, 1),
-    box-shadow 420ms ease,
-    background-color 420ms ease;
-  padding: 4px;
+  bottom: calc(5px + env(safe-area-inset-bottom, 0px));
+  width: calc(100% - var(--dock-edge-gap) - var(--dock-edge-gap));
+  max-width: 460px;
+  height: 52px;
+  padding: 3px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
-  border: 1px solid rgba(255, 255, 255, .49);
+  border: 1px solid rgba(235, 244, 236, .20);
   border-radius: 999px;
-  background: rgba(243, 251, 246, .09);
-  -webkit-backdrop-filter: blur(3px) saturate(125%);
-  backdrop-filter: blur(3px) saturate(125%);
-  box-shadow:
-    0 9px 25px rgba(31, 54, 37, .11),
-    0 2px 5px rgba(25, 41, 29, .04),
-    inset 0 1px 1px rgba(255, 255, 255, .55);
-  transform: translateX(-50%);
+  background: rgba(13, 19, 16, .11);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, .16);
   isolation: isolate;
+  transform: translate3d(-50%, 0, 0);
+  transition: width 600ms cubic-bezier(.18, .91, .28, 1);
 }
 .floating-nav.is-compact {
-  width: min(calc(100% - 48px), 310px);
-  background-color: rgba(243, 251, 246, .13);
-  box-shadow:
-    0 7px 19px rgba(31, 54, 37, .12),
-    0 2px 5px rgba(25, 41, 29, .04),
-    inset 0 1px 1px rgba(255, 255, 255, .55);
+  width: min(calc(100% - 108px), 286px);
 }
+/* This is the author's real glass component, not a CSS-only imitation. */
 .nav-glass {
   position: absolute;
   z-index: 0;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
+  border-radius: inherit;
   overflow: hidden;
-  border-radius: inherit;
   pointer-events: none;
 }
-.floating-nav::after {
-  position: absolute;
-  content: "";
-  inset: 1px;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, .22);
-  background: linear-gradient(165deg, rgba(255, 255, 255, .30), transparent 34%, rgba(217, 240, 226, .06) 100%);
-}
+/* The whole transparent pill follows the grid cell. Keeping it in normal
+   proportions while the dock resizes avoids the circle/squash effect. */
 .nav-indicator {
   position: absolute;
   z-index: 1;
-  left: 5px;
-  top: 5px;
-  width: calc((100% - 10px) / 5);
+  top: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 5);
   height: 44px;
   display: grid;
   place-items: center;
+  border-radius: 999px;
   pointer-events: none;
   transform: translate3d(var(--active-translate), 0, 0);
-  transition: transform 480ms cubic-bezier(.22, 1.04, .34, 1);
-  will-change: transform;
+  transition: transform 500ms cubic-bezier(.19, 1.07, .31, 1);
 }
-.floating-nav.nav-initializing .nav-indicator { transition: none; }
-/* Restore the pill-shaped lens. Its width tracks each tab as the dock
-   expands or contracts, while its 40px height stays consistent. */
-.nav-indicator::before,
-.nav-indicator::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: calc(100% - 6px);
-  height: 40px;
-  border-radius: 999px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.nav-indicator::before {
-  background: rgba(245, 255, 249, .24);
-  border: 1px solid rgba(255, 255, 255, .74);
-  -webkit-backdrop-filter: blur(9px) saturate(145%);
-  backdrop-filter: blur(9px) saturate(145%);
-  box-shadow:
-    0 2px 9px rgba(33, 77, 46, .10),
-    inset 0 1px 2px rgba(255, 255, 255, .80),
-    inset 0 -1px 2px rgba(93, 154, 111, .11);
+.floating-nav.nav-initializing .nav-indicator {
+  transition: none;
 }
 .nav-bubble {
-  position: relative;
-  z-index: 1;
   display: block;
-  width: calc(100% - 6px);
-  height: 40px;
-  overflow: hidden;
+  width: calc(100% - 1px);
+  height: 44px;
   border-radius: 999px;
+  overflow: hidden;
   pointer-events: none;
-  transition: transform 440ms cubic-bezier(.22, 1.05, .35, 1);
 }
-.nav-indicator::after {
-  z-index: 2;
-  border: 1px solid rgba(255, 255, 255, .36);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .72);
-  background: linear-gradient(160deg, rgba(255,255,255,.21), transparent 42%, rgba(203,236,216,.06));
-}
-.floating-nav.is-moving .nav-bubble {
-  transform: scaleX(1.045) scaleY(.99);
-}
+/* Five touch targets; all labels stay available to VoiceOver via aria-label. */
 .nav-item {
   position: relative;
-  z-index: 3;
-  width: 100%;
+  z-index: 2;
   min-width: 0;
-  height: 44px;
   min-height: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   border-radius: 999px;
-  color: #67766b;
   background: transparent;
+  color: rgba(245, 247, 245, .78);
   text-decoration: none;
-  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: color 240ms ease, transform 180ms ease;
+  touch-action: manipulation;
+  transition: color 200ms ease;
 }
-.nav-item.active { color: #245b3e; }
-.nav-item:active { transform: scale(.95); }
+.nav-item.active {
+  color: #f7faf7;
+}
+.nav-item:active .nav-icon {
+  transform: scale(.94);
+}
 .nav-icon {
   position: relative;
   display: block;
-  width: 22px;
-  height: 22px;
-  transition: transform 300ms cubic-bezier(.2, 1.1, .4, 1);
+  width: 23px;
+  height: 23px;
+  transition: transform 260ms cubic-bezier(.2, 1, .32, 1);
 }
 .nav-icon .icon {
   position: absolute;
   inset: 0;
-  width: 22px;
-  height: 22px;
-  stroke-width: 1.4;
+  width: 23px;
+  height: 23px;
+  stroke-width: 1.65;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: opacity 190ms ease, transform 290ms ease;
+  transition: opacity 190ms ease, transform 260ms ease;
 }
 .nav-icon-outline { opacity: 1; transform: scale(1); }
-.nav-icon-filled { opacity: 0; transform: scale(.91); }
-.nav-item.active .nav-icon { transform: scale(1.035); }
-.nav-item.active .nav-icon-outline { opacity: 0; transform: scale(.9); }
+.nav-icon-filled { opacity: 0; transform: scale(.94); }
+.nav-item.active .nav-icon-outline { opacity: 0; transform: scale(.94); }
 .nav-item.active .nav-icon-filled { opacity: 1; transform: scale(1); }
 .cart-badge {
   position: absolute;
@@ -298,32 +252,25 @@ h1 em { color: var(--green); font-style: normal; }
   min-width: 17px;
   height: 17px;
   padding: 0 3px;
-  background: #dc6944;
-  color: white;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #d76b4c;
   font-size: 9px;
   font-weight: 800;
-  line-height: 13px;
-  text-align: center;
-  border: 2px solid white;
-  border-radius: 99px;
-  box-shadow: 0 1px 3px rgba(82, 41, 25, .13);
+  line-height: 1;
+  border: 2px solid #1d2821;
+  border-radius: 999px;
 }
+/* The controls remain usable if filters are disabled or unsupported. */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .floating-nav { background: rgba(247, 251, 247, .94); }
-  .nav-indicator::before { background: #deeee3; }
+  .floating-nav { background: rgba(14, 21, 17, .84); }
+  .nav-indicator { background: rgba(225, 235, 226, .18); }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .floating-nav {
-    background: #f9fcf9;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
+  .floating-nav { background: #17231b; }
   .nav-glass, .nav-bubble { display: none; }
-  .nav-indicator::before {
-    background: #dcefe3;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
+  .nav-indicator { background: #3a4840; }
 }
 .toast { position: fixed; z-index: 70; bottom: calc(100px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); background: #234b35; border-radius: 100px; padding: 12px 20px; color: white; box-shadow: var(--shadow); font-size: 12px; font-weight: 700; white-space: nowrap; max-width: calc(100vw - 38px); text-align: center; }
 @media (min-width: 600px) {

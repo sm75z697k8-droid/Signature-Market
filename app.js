@@ -39,7 +39,6 @@
   let category = "all";
   let activeRoute = "home";
   let hasRenderedRoute = false;
-  let glassMotionTimer;
   let focusSearchOnOpen = false;
   let toastTimer;
   const scrollPositions = Object.fromEntries(routes.map(route => [route, 0]));
@@ -166,9 +165,7 @@
 
   function showRoute() {
     const route = currentRoute();
-    const switchingTabs = hasRenderedRoute && route !== activeRoute;
     const nav = document.querySelector(".floating-nav");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (route !== activeRoute) scrollPositions[activeRoute] = window.scrollY;
 
@@ -188,14 +185,6 @@
 
     // A single indicator moves horizontally beneath all five tabs.
     nav.style.setProperty("--active-translate", String(routes.indexOf(route) * 100) + "%");
-    if (switchingTabs && !reducedMotion) {
-      nav.classList.remove("is-moving");
-      // Restart the subtle highlight if taps occur rapidly mid-transition.
-      void nav.offsetWidth;
-      nav.classList.add("is-moving");
-      clearTimeout(glassMotionTimer);
-      glassMotionTimer = setTimeout(() => nav.classList.remove("is-moving"), 540);
-    }
     if (!hasRenderedRoute) {
       hasRenderedRoute = true;
       requestAnimationFrame(() => nav.classList.remove("nav-initializing"));

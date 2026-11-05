@@ -260,8 +260,19 @@ h1 em { color: var(--green); font-style: normal; }
   width: 31px;
   transition: transform 460ms cubic-bezier(.2, 1.25, .4, 1);
 }
-.nav-icon .icon { width: 22px; height: 22px; }
-.nav-item.active .nav-icon { transform: translateY(-1px) scale(1.09); }
+.nav-icon .icon {
+  position: absolute;
+  top: 2px;
+  left: 4.5px;
+  width: 22px;
+  height: 22px;
+  transition: opacity 210ms ease, transform 360ms cubic-bezier(.18, 1.13, .35, 1);
+}
+.nav-icon-outline { opacity: 1; transform: scale(1); }
+.nav-icon-filled { opacity: 0; transform: scale(.83); }
+.nav-item.active .nav-icon { transform: translateY(-1px) scale(1.08); }
+.nav-item.active .nav-icon-outline { opacity: 0; transform: scale(.84); }
+.nav-item.active .nav-icon-filled { opacity: 1; transform: scale(1); }
 .nav-label {
   font-size: clamp(9px, 2.45vw, 11px);
   letter-spacing: -.15px;

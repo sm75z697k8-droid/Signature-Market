@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#faf9f5">
+  <meta name="description" content="An independent, mobile-first Signature Market shopping app redesign concept.">
+  <title>Signature Market — Redesign Concept</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <!-- Small, local icon set so the prototype requires no icon libraries. -->
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10a1 1 0 0 1-1 1h-5.5v-7h-4v7H4.5a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7.5-3 9h18c0-1.5-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1.2 12H3.8L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 2 2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2Z"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C9 3 4 9 4 16a4 4 0 0 0 4 4c7 0 13-6 12-16Z"/><path d="M6 18c3-4 6-7 11-10"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Signature Market concept — Home">
+        <span class="brand-mark"><svg class="icon"><use href="#i-leaf"/></svg></span>
+        <span class="brand-name">signature<span>market</span><small>REDESIGN CONCEPT</small></span>
+      </a>
+      <button class="top-action" type="button" data-go="alerts" aria-label="Open notifications">
+        <svg class="icon"><use href="#i-bell"/></svg>
+      </button>
+    </header>
+
+    <main id="main-content">
+      <section class="view" id="view-home" data-view="home" aria-labelledby="home-title">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> A LITTLE BETTER, EVERY DAY</div>
+        <h1 id="home-title">Your good food <em>era.</em></h1>
+        <p class="intro">Wholesome favourites, thoughtfully picked for you.</p>
+
+        <button class="search-prompt" type="button" data-search-open>
+          <svg class="icon"><use href="#i-search"/></svg>
+          <span>Search snacks, nuts, granola...</span>
+          <span class="search-shortcut">Explore</span>
+        </button>
+
+        <div class="hero-card">
+          <img src="https://assets.signaturemarket.co/images/20231220061801_202312200618011104333444.jpg" alt="Signature Market mini packs of nut mixes" fetchpriority="high">
+          <div class="hero-copy">
+            <span class="hero-kicker"><svg class="icon"><use href="#i-sparkle"/></svg> FEEL-GOOD FINDS</span>
+            <h2>Small snacks.<br>Big joy.</h2>
+            <p>Find something delicious for your daily reset.</p>
+            <button class="hero-button" type="button" data-go="products">Shop the edit <svg class="icon"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow mini">CURATED FOR YOU</p><h2>Shop by mood</h2></div>
+          <button class="text-button" type="button" data-go="products">See all <svg class="icon"><use href="#i-arrow"/></svg></button>
+        </div>
+        <div class="category-row" aria-label="Browse products by category">
+          <button type="button" class="category-tile" data-category-go="nuts"><span class="category-emoji">🥜</span><span>Nuts & mixes</span><svg class="icon"><use href="#i-arrow"/></svg></button>
+          <button type="button" class="category-tile" data-category-go="granola"><span class="category-emoji">🥣</span><span>Breakfast</span><svg class="icon"><use href="#i-arrow"/></svg></button>
+        </div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow mini">A GOOD PLACE TO START</p><h2>Fresh picks</h2></div>
+          <button class="text-button" type="button" data-go="products">View all <svg class="icon"><use href="#i-arrow"/></svg></button>
+        </div>
+        <div id="home-products" class="product-grid home-products"></div>
+      </section>
+
+      <section class="view" id="view-products" data-view="products" aria-labelledby="products-title" hidden>
+        <p class="eyebrow">DISCOVER YOUR NEXT FAVOURITE</p>
+        <h1 id="products-title">The good <em>stuff.</em></h1>
+        <p class="intro">Little things that make the day feel better.</p>
+        <label class="search-field" for="product-search">
+          <svg class="icon"><use href="#i-search"/></svg>
+          <input id="product-search" type="search" placeholder="What are you craving?" autocomplete="off" enterkeyhint="search">
+        </label>
+        <div class="filter-row" role="group" aria-label="Product categories">
+          <button type="button" class="filter-chip active" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-chip" data-filter="nuts" aria-pressed="false">Nuts & mixes</button>
+          <button type="button" class="filter-chip" data-filter="granola" aria-pressed="false">Breakfast</button>
+        </div>
+        <div class="list-heading"><h2>Browse products</h2><span id="product-count"></span></div>
+        <div id="products-grid" class="product-grid"></div>
+        <p class="catalog-note">Products and prices are illustrative. This is a design prototype, not a live store.</p>
+      </section>
+
+      <section class="view" id="view-alerts" data-view="alerts" aria-labelledby="alerts-title" hidden>
+        <p class="eyebrow">STAY IN THE LOOP</p>
+        <h1 id="alerts-title">Your <em>updates.</em></h1>
+        <p class="intro">A little space for things worth knowing.</p>
+        <div class="empty-state">
+          <span class="empty-art lavender"><svg class="icon"><use href="#i-bell"/></svg></span>
+          <h2>All caught up.</h2>
+          <p>Order updates, special news and little surprises will appear here when this concept is connected to a real account.</p>
+          <button class="primary-button" type="button" data-go="products">Explore products <svg class="icon"><use href="#i-arrow"/></svg></button>
+        </div>
+      </section>
+
+      <section class="view" id="view-cart" data-view="cart" aria-labelledby="cart-title" hidden>
+        <p class="eyebrow">YOUR LITTLE HAUL</p>
+        <h1 id="cart-title">My <em>cart.</em></h1>
+        <p class="intro">Your feel-good finds, all in one place.</p>
+        <div id="cart-content" aria-live="polite"></div>
+      </section>
+
+      <section class="view" id="view-profile" data-view="profile" aria-labelledby="profile-title" hidden>
+        <p class="eyebrow">JUST FOR YOU</p>
+        <h1 id="profile-title">Your <em>space.</em></h1>
+        <p class="intro">A calm little corner for your wellness journey.</p>
+        <div class="profile-card">
+          <div class="avatar"><svg class="icon"><use href="#i-user"/></svg></div>
+          <div><span class="profile-tag">PROTOTYPE PROFILE</span><h2>Welcome, explorer.</h2><p>Account sign-in is not connected yet.</p></div>
+        </div>
+        <div class="profile-links">
+          <button type="button" data-go="cart"><span class="profile-link-icon"><svg class="icon"><use href="#i-bag"/></svg></span><span>My demo cart<small>Review the items you've saved here</small></span><svg class="icon link-arrow"><use href="#i-arrow"/></svg></button>
+          <a href="https://www.signaturemarket.co/my/marketplace/" target="_blank" rel="noopener noreferrer"><span class="profile-link-icon"><svg class="icon"><use href="#i-leaf"/></svg></span><span>Official Signature Market shop<small>Opens the real website in a new tab</small></span><svg class="icon link-arrow"><use href="#i-arrow"/></svg></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="concept-footer">Independent UI concept · Not connected to orders or accounts</footer>
+  </div>
+
+  <nav class="floating-nav" aria-label="Primary navigation">
+    <a class="nav-item active" href="#home" data-route="home" aria-label="Home" aria-current="page">
+      <span class="nav-icon"><svg class="icon"><use href="#i-home"/></svg></span><span class="nav-label">Home</span>
+    </a>
+    <a class="nav-item" href="#products" data-route="products" aria-label="Products">
+      <span class="nav-icon"><svg class="icon"><use href="#i-grid"/></svg></span><span class="nav-label">Products</span>
+    </a>
+    <a class="nav-item" href="#alerts" data-route="alerts" aria-label="Notifications">
+      <span class="nav-icon"><svg class="icon"><use href="#i-bell"/></svg></span><span class="nav-label">Alerts</span>
+    </a>
+    <a class="nav-item" href="#cart" data-route="cart" aria-label="My Cart">
+      <span class="nav-icon"><svg class="icon"><use href="#i-bag"/></svg><span class="cart-badge" id="cart-badge" hidden></span></span><span class="nav-label">Cart</span>
+    </a>
+    <a class="nav-item" href="#profile" data-route="profile" aria-label="Profile">
+      <span class="nav-icon"><svg class="icon"><use href="#i-user"/></svg></span><span class="nav-label">Profile</span>
+    </a>
+  </nav>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

@@ -179,10 +179,10 @@ h1 em { color: var(--green); font-style: normal; }
 .nav-indicator {
   position: absolute;
   z-index: 1;
-  left: 8px;
-  top: 8px;
-  width: calc((100% - 16px) / 5);
-  height: calc(100% - 16px);
+  left: 9px;
+  top: 9px;
+  width: calc((100% - 18px) / 5);
+  height: calc(100% - 18px);
   border-radius: 999px;
   pointer-events: none;
   background: linear-gradient(155deg,
@@ -201,6 +201,7 @@ h1 em { color: var(--green); font-style: normal; }
   transition: transform 520ms cubic-bezier(.22, 1.15, .35, 1);
   will-change: transform;
 }
+.floating-nav.nav-initializing .nav-indicator { transition: none; }
 .nav-indicator::before,
 .nav-indicator::after {
   content: "";

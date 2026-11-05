@@ -2,15 +2,19 @@
 
 An **independent, unofficial mobile-first storefront prototype** for exploring a cleaner Signature Market shopping app. Built in plain HTML, CSS and JavaScript to work directly from GitHub Pages and iPhone Safari.
 
-## Compact floating navigation
+## Scroll-responsive floating navigation
 
 Five icon-only destinations: **Home, Products, Notifications, My Cart, Profile**.
 
-- Thin, rounded **outline icons** become **filled icons** when selected.
-- No visible text labels in the navigation. Every link retains a descriptive `aria-label` for VoiceOver.
-- A subtle, fully rounded **54px-tall** translucent glass capsule sits **2px above the iPhone safe-area inset**.
-- Five accessible **44px touch targets**, a small cart-quantity badge, and a separate **40px circular glass bubble** that slides under the active tab and gently stretches in motion.
-- The current tab is reflected in the URL hash, so browser Back/Forward works and scroll positions are preserved.
+- **Starts expanded:** nearly edge-to-edge on iPhone (9px horizontal margin) while staying 54px tall.
+- **Scroll down:** after a deliberate downward gesture past the top of the page, it smoothly shrinks into a 310px maximum-width dock.
+- **Scroll up:** after a short upward gesture, it expands again. Small scroll bounces are ignored so the navigation does not flicker.
+- **Switch tabs:** expands on the newly selected screen even if its saved scroll position is restored; browser Back/Forward and scroll restoration still work.
+- **Pill selection:** returns to a capsule-shaped glass highlight (not a circle), stretching to match each tab's width at both dock sizes.
+- Thin, rounded **outline icons** become **filled icons** when selected. Visible text labels remain removed, but descriptive `aria-label` values are retained for VoiceOver.
+- Five **44px touch targets**, an item-count badge, and an independently sliding glass lens. The dock sits 2px above the iPhone safe-area inset.
+- The dock uses CSS width transitions; `nav-scroll.js` checks scroll direction without touching heavy filters. The glass adapter rebuilds the source SVG filter **only after** the width transition finishes.
+- Reduced-motion and reduced-transparency preferences are respected.
 
 ### The original srdavo/liquid-glass component
 
@@ -21,7 +25,7 @@ Per the design brief, the project contains **unaltered copies of both JavaScript
 - `vendor/liquid-glass/displacement-utils.js` — upstream displacement-map and SVG-filter helpers.
 - `vendor/liquid-glass/glass-element.js` — upstream `<glass-element>` Web Component.
 
-Both files were copied as-is from the upstream `main` branch. We did **not** rewrite the author's component. All layout and integration changes live in our own `styles.css`, `index.html`, and `nav-glass-adapter.js`. The project uses **two instances of the original component**: one for the translucent dock, and one inside the animated selection bubble. The adapter keeps both sized correctly on rotation and screen resize.
+Both files were copied as-is from the upstream `main` branch. We did **not** rewrite the author's component. All layout and integration changes live in our own `styles.css`, `index.html`, and `nav-glass-adapter.js`. The project uses **two instances of the original component**: one for the translucent dock, and one inside the sliding pill. The adapter updates their filter geometry after animated width transitions or device rotation; the upstream files themselves remain unchanged.
 
 **Browser compatibility:** The upstream component's own code explicitly uses a standard blurred-glass fallback on Safari, including iPhone Safari; SVG backdrop displacement works mainly in supported Chromium browsers. On an iPhone you will therefore see the **author's Safari fallback**, not full real-time refractive distortion. This is not a pixel-identical implementation of Apple's native iOS Liquid Glass system. Our small highlights and moving selection pill remain visible on Safari.
 
@@ -44,9 +48,10 @@ If Pages is already configured, new commits to `main` deploy automatically. If t
 | File | Purpose |
 |---|---|
 | `index.html` | Storefront screens, SVG icon outlines/fills, five icon-only tabs |
-| `styles.css` | Compact rounded UI, position, active highlight and motion |
+| `styles.css` | Expanded/compact dock sizes, capsule lens, animations and accessibility |
 | `app.js` | Hash-based tab navigation, demo product search and persistent local cart |
-| `nav-glass-adapter.js` | Sizes both original glass instances (dock and moving selection bubble) |
+| `nav-scroll.js` | Scroll direction, thresholds, expanding and collapsing the dock |
+| `nav-glass-adapter.js` | Keeps original glass components fluid without per-frame re-rendering |
 | `vendor/liquid-glass/displacement-utils.js` | **Unmodified original** by srdavo |
 | `vendor/liquid-glass/glass-element.js` | **Unmodified original** by srdavo |
 | `icon.svg` | Local concept icon |

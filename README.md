@@ -13,11 +13,17 @@ Tapping an icon changes its selected state, smoothly slides a subtle frosted hig
 ## Visual choices
 
 - Narrow, fully rounded, frosted-glass capsule using native CSS `backdrop-filter`.
-- Equal left/right spacing: **28px** on typical iPhones (responsive on narrow devices).
+- Equal left/right spacing: **20px** on typical iPhones (responsive on narrow devices).
 - **58px** bar height, with 44px interactive tap targets.
 - One subtle active indicator instead of a complicated liquid-glass simulation.
 - Respect for reduced-motion and reduced-transparency accessibility settings.
 - No packages, network requests, framework, third-party scripts, build step, or copied glass library.
+
+## Safari long-press and zoom behaviour
+
+This navigation-only prototype suppresses Safari's link preview / callout when holding a tab, disables selecting or dragging its icons, and blocks common double-tap and pinch-to-zoom gestures. The settings are in the viewport meta tag, `styles.css`, and the nav handlers in `app.js`.
+
+**Accessibility trade-off:** Restricting pinch zoom can make a real shopping app harder to use for people who need magnification. For production, keep the long-press suppression on navigation controls but remove `user-scalable=no`, `maximum-scale=1`, and the global `gesturestart`/`gesturechange` preventions so users can zoom normally. System-level iOS magnification and some browser gestures may still remain available.
 
 ## Files
 

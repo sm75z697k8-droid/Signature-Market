@@ -35,6 +35,7 @@ The first publication can take a short time. If you don't see the site, return t
 | `index.html` | Semantic views, inline SVG icons, five-tab floating navigation |
 | `styles.css` | iPhone-first responsive styling, glass bar, safe areas |
 | `app.js` | Tab routing, demo products, filtering, and local cart |
+| `liquid-glass.js` | Original SVG displacement experiment for supported Chromium browsers, plus touch-responsive highlights for iPhone |
 | `icon.svg` | Original concept leaf icon |
 | `README.md` | This guide |
 
@@ -52,6 +53,14 @@ You can tweak the feel in `styles.css`:
 - `.nav-item` and `.nav-icon`: icon colours, weight, transitions, and touch target.
 
 The glass lens works without JavaScript animation libraries. On devices that request reduced motion, movement is effectively disabled. On devices that request reduced transparency or don't support backdrop blur, the bar becomes opaque so the labels remain readable.
+
+### Inspired by srdavo/liquid-glass
+
+The experimental refraction in this project was **inspired by** [srdavo/liquid-glass](https://github.com/srdavo/liquid-glass), which demonstrates how an SVG displacement map and a backdrop filter can imitate light bending. The original repository has no visible licence file, so this project **does not copy its source files**. Instead, `liquid-glass.js` independently implements a capsule-shaped signed-distance displacement field (generated in a canvas once per size), uses an SVG filter for optional RGB edge separation, and adds a small touch-following surface reflection.
+
+**Important iPhone limitation:** The reference project itself uses a blur fallback on Safari. Its full SVG refraction is not reliably available to ordinary Safari web pages. The iPhone experience here therefore uses Apple's WebKit-compatible backdrop blur with gradients and specular highlights; it cannot be an exact clone of native iOS Liquid Glass. Chromium environments with support for SVG filters in `backdrop-filter` can receive the experimental true displacement treatment. If a browser does not support that technique or transparency is reduced, navigation remains fully functional with the fallback glass surface.
+
+No third-party code, package manager, CDN, build process, or additional setup is required.
 
 ## Design direction
 

@@ -39,18 +39,19 @@ let notificationsRead = readJSON("signature-market-demo-notifications-read", fal
 let selectedFilter = "All";
 let currentRoute = "home";
 let previousFocus = null;
+let previousQuickViewFocus = null;
 let toastTimer;
 
 function productCard(product) {
   return `
     <article class="product-card">
-      <div class="product-visual" style="--product-bg: ${product.bg}">
+      <button class="product-visual" type="button" data-view="${product.id}" style="--product-bg: ${product.bg}" aria-label="View details for ${product.name}">
         <span class="product-tag">${product.tag}</span>
         <span class="product-emoji" role="img" aria-label="${product.categoryLabel}">${product.emoji}</span>
-      </div>
+      </button>
       <div class="product-meta">
         <p class="product-category">${product.categoryLabel}</p>
-        <h3 class="product-name">${product.name}</h3>
+        <h3 class="product-name"><button class="product-name-button" type="button" data-view="${product.id}">${product.name}</button></h3>
         <p class="product-weight">${product.weight}</p>
       </div>
       <div class="product-footer">
@@ -77,8 +78,17 @@ function renderProducts() {
   });
 }
 
-function navigate(route) {
+function routeFromHash() {
+  const route = window.location.hash.replace(/^#/, "").toLowerCase();
+  return routes.includes(route) ? route : "home";
+}
+
+function navigate(route, options = {}) {
   if (!routes.includes(route)) return;
+  const { writeHistory = true, focus = true } = options;
+  if (writeHistory && route !== currentRoute) {
+    window.history.pushState({ route }, "", `#${route}`);
+  }
   currentRoute = route;
   document.querySelectorAll("[data-page]").forEach(page => {
     const active = page.dataset.page === route;
@@ -95,7 +105,7 @@ function navigate(route) {
   window.scrollTo({ top: 0, behavior: "auto" });
   document.title = `${route === "cart" ? "My Cart" : route[0].toUpperCase() + route.slice(1)} — Signature Market Concept`;
   const heading = byId(`page-${route}`).querySelector("h1");
-  if (heading) {
+  if (focus && heading) {
     heading.setAttribute("tabindex", "-1");
     heading.focus({ preventScroll: true });
   }
@@ -120,8 +130,12 @@ function updateCartBadge() {
   const badge = byId("cartCount");
   badge.hidden = count === 0;
   badge.textContent = count > 99 ? "99+" : String(count);
-  const navCart = document.querySelector('[data-nav="cart"]');
-  navCart.setAttribute("aria-label", `My Cart, ${count} ${count === 1 ? "item" : "items"}`);
+  const headerBadge = byId("headerCartCount");
+  headerBadge.hidden = count === 0;
+  headerBadge.textContent = count > 99 ? "99+" : String(count);
+  document.querySelectorAll('[data-nav="cart"]').forEach(button => {
+    button.setAttribute("aria-label", `My Cart, ${count} ${count === 1 ? "item" : "items"}`);
+  });
 }
 function addToCart(id) {
   const product = getProduct(id);
@@ -178,6 +192,36 @@ function renderCart() {
     </div>`;
 }
 
+function openQuickView(id) {
+  const product = getProduct(id);
+  if (!product) return;
+  previousQuickViewFocus = document.activeElement;
+  byId("quickViewDetails").innerHTML = `
+    <div class="quick-view-visual" style="--product-bg: ${product.bg}">
+      <span class="quick-view-emoji" aria-hidden="true">${product.emoji}</span>
+    </div>
+    <div class="quick-view-copy">
+      <p class="overline">${product.categoryLabel} · PRODUCT PREVIEW</p>
+      <h2 id="quickViewTitle">${product.name}</h2>
+      <p class="quick-view-weight">${product.weight} · Curated for feel-good moments</p>
+      <p class="quick-view-description">A delicious pick from our illustrative concept collection. Actual ingredients, nutrition and availability will be shown once this prototype connects to the store.</p>
+      <p class="quick-view-price">${money(product.price)}</p>
+      <button type="button" class="primary-button quick-view-add" data-add="${product.id}">Add to my cart ${icon("plus")}</button>
+      <small>Sample product information and pricing.</small>
+    </div>`;
+  byId("quickViewBackdrop").hidden = false;
+  byId("quickViewDialog").hidden = false;
+  document.body.style.overflow = "hidden";
+  byId("closeQuickView").focus();
+}
+
+function closeQuickView() {
+  byId("quickViewBackdrop").hidden = true;
+  byId("quickViewDialog").hidden = true;
+  document.body.style.overflow = "";
+  previousQuickViewFocus?.focus();
+}
+
 function updateUnreadIndicator() {
   byId("unreadDot").hidden = notificationsRead;
   byId("notificationsTrigger").setAttribute("aria-label", notificationsRead ? "Open notifications" : "Open notifications, 2 unread");
@@ -229,6 +273,8 @@ document.addEventListener("click", event => {
   if (go) { navigate(go.dataset.go); return; }
   const add = event.target.closest("[data-add]");
   if (add) { addToCart(add.dataset.add); return; }
+  const view = event.target.closest("[data-view]");
+  if (view) { openQuickView(view.dataset.view); return; }
   const quantity = event.target.closest("[data-quantity]");
   if (quantity) {
     setQuantity(quantity.dataset.quantity, (cart[quantity.dataset.quantity] || 0) + Number(quantity.dataset.change));
@@ -238,6 +284,12 @@ document.addEventListener("click", event => {
 });
 
 byId("productSearch").addEventListener("input", renderProducts);
+byId("headerSearch").addEventListener("click", () => {
+  navigate("products");
+  byId("productSearch").focus({ preventScroll: true });
+});
+window.addEventListener("popstate", () => navigate(routeFromHash(), { writeHistory: false, focus: false }));
+window.addEventListener("hashchange", () => navigate(routeFromHash(), { writeHistory: false, focus: false }));
 document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
   selectedFilter = button.dataset.filter;
   renderProducts();
@@ -245,11 +297,26 @@ document.querySelectorAll("[data-filter]").forEach(button => button.addEventList
 byId("notificationsTrigger").addEventListener("click", openNotifications);
 byId("closeNotifications").addEventListener("click", closeNotifications);
 byId("notificationBackdrop").addEventListener("click", closeNotifications);
+byId("closeQuickView").addEventListener("click", closeQuickView);
+byId("quickViewBackdrop").addEventListener("click", closeQuickView);
 byId("markRead").addEventListener("click", () => {
   notificationsRead = true;
   writeJSON("signature-market-demo-notifications-read", true);
   renderNotifications();
 });
+document.addEventListener("keydown", event => {
+  if (byId("quickViewDialog").hidden) return;
+  if (event.key === "Escape") { closeQuickView(); return; }
+  if (event.key === "Tab") {
+    const focusables = [...byId("quickViewDialog").querySelectorAll("button:not(:disabled)")];
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  }
+});
+
 document.addEventListener("keydown", event => {
   if (byId("notificationSheet").hidden) return;
   if (event.key === "Escape") { closeNotifications(); return; }
@@ -267,3 +334,4 @@ renderProducts();
 renderCart();
 renderNotifications();
 updateCartBadge();
+navigate(routeFromHash(), { writeHistory: false, focus: false });

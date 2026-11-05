@@ -40,7 +40,6 @@
   let activeRoute = "home";
   let hasRenderedRoute = false;
   let glassMotionTimer;
-  const tabSymbols = { home: "home", products: "grid", alerts: "bell", cart: "bag", profile: "user" };
   let focusSearchOnOpen = false;
   let toastTimer;
   const scrollPositions = Object.fromEntries(routes.map(route => [route, 0]));
@@ -185,9 +184,6 @@
       if (selected) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
 
-      // Change the SVG symbol, rather than drawing a thick outline to fake a filled icon.
-      const symbol = link.querySelector(".nav-icon use");
-      if (symbol) symbol.setAttribute("href", "#i-" + tabSymbols[link.dataset.route] + (selected ? "-fill" : ""));
     });
 
     // A single indicator moves horizontally beneath all five tabs.

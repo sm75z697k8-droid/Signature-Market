@@ -1,78 +1,62 @@
-# Signature Market — Floating Navigation Concept
+# Signature Market — iPhone UI Redesign Concept
 
-A **personal, unofficial redesign prototype** for the Signature Market shopping experience, built mobile-first for iPhone Safari. This is not the official app, does not use real customer data, and is not connected to checkout, orders, notifications, or any Signature Market systems.
+An **independent, unofficial mobile-first storefront prototype** for exploring a cleaner Signature Market shopping app. Built in plain HTML, CSS and JavaScript to work directly from GitHub Pages and iPhone Safari.
 
-## What works
+## Compact floating navigation
 
-- Five floating, rounded tabs: **Home, Products, Notifications (shown as Alerts), My Cart (shown as Cart), Profile**.
-- **Liquid-Glass-inspired navigation:** a fully rounded floating capsule, layered translucency, background blur, edge highlights, and one sliding glossy selection lens.
-- **Icon state animation:** outlined SVGs when inactive and filled SVGs when selected, with a short crossfade/scale transition.
-- **Fluid tab switching:** a spring-like 520ms glide between destinations, plus a subtle moving reflection. Rapid taps interrupt and redirect the transition.
-- A cart badge, iPhone safe-area support, and accessibility fallbacks for reduced motion and reduced transparency.
-- Functional navigation with URL hashes, browser Back/Forward, and scroll position remembered per tab.
-- Product search and category chips.
-- Add to cart, quantity +/−, calculated sample subtotal, and demo cart saved in your browser when local storage is available.
-- iPhone safe-area spacing, touch-friendly controls, semantic labels, and reduced-motion support.
-- No npm, React, build commands, dependencies, credentials, or laptop required.
+Five icon-only destinations: **Home, Products, Notifications, My Cart, Profile**.
 
-## Preview on iPhone (GitHub Pages)
+- Thin, rounded **outline icons** become **filled icons** when selected.
+- No visible text labels in the navigation. Every link retains a descriptive `aria-label` for VoiceOver.
+- A small, fully rounded **56px-tall** floating capsule sits **4px above the iPhone safe-area inset**.
+- Five accessible **44px touch targets**, a small cart-quantity badge, and a single smoothly sliding glass selection lens.
+- The current tab is reflected in the URL hash, so browser Back/Forward works and scroll positions are preserved.
 
-GitHub doesn't render `index.html` as a running website inside the repository view. To host the prototype, enable **GitHub Pages** once:
+### The original srdavo/liquid-glass component
 
-1. Open this repository on GitHub in **Safari** and sign into your account.
-2. Open **Settings → Pages**. On a narrow screen you may need to scroll the repository's top navigation, or request the desktop website in Safari.
-3. Under **Build and deployment**, set Source to **Deploy from a branch**, Branch to **main**, folder to **/(root)**, then tap **Save**.
-4. Once GitHub Pages has published, use the **Visit site** link in Pages settings. The expected URL is:
-   **https://sm75z697k8-droid.github.io/Signature-Market/**
-5. Optional: in Safari, tap Share → **Add to Home Screen** for an app-like shortcut.
+Per the design brief, the project contains **unaltered copies of both JavaScript files** from:
 
-The first publication can take a short time. If you don't see the site, return to Pages settings to check its status. Future changes to `main` publish automatically.
+**https://github.com/srdavo/liquid-glass**
 
-## Files
+- `vendor/liquid-glass/displacement-utils.js` — upstream displacement-map and SVG-filter helpers.
+- `vendor/liquid-glass/glass-element.js` — upstream `<glass-element>` Web Component.
+
+Both files were copied as-is from the upstream `main` branch. We did **not** rewrite the author's component. All layout and integration changes live in our own `styles.css`, `index.html`, and `nav-glass-adapter.js`. The adapter keeps the original glass element sized to the icon-only nav on rotation and screen resize.
+
+**Browser compatibility:** The upstream component's own code explicitly uses a standard blurred-glass fallback on Safari, including iPhone Safari; SVG backdrop displacement works mainly in supported Chromium browsers. On an iPhone you will therefore see the **author's Safari fallback**, not full real-time refractive distortion. This is not a pixel-identical implementation of Apple's native iOS Liquid Glass system. Our small highlights and moving selection pill remain visible on Safari.
+
+**Attribution / permission:** This repository gives credit to srdavo and links to the original source. The upstream project did not show a separate licence file when copied; if distributing this as an official company product, retain attribution and confirm the permission terms with the author.
+
+## Preview on your iPhone
+
+You don't need a laptop or build tools:
+
+1. Sign in to GitHub in Safari and open this repository.
+2. Open **Settings → Pages**. If the tab is hidden on iPhone, scroll the repository navigation or request the desktop website.
+3. Set Source to **Deploy from a branch**, select **main**, folder **/(root)**, then Save.
+4. When publishing is complete, open **https://sm75z697k8-droid.github.io/Signature-Market/**.
+5. Optional: Safari **Share → Add to Home Screen** for a more app-like view.
+
+If Pages is already configured, new commits to `main` deploy automatically. If the design looks cached, refresh or reopen the page.
+
+## Project structure
 
 | File | Purpose |
 |---|---|
-| `index.html` | Semantic views, inline SVG icons, five-tab floating navigation |
-| `styles.css` | iPhone-first responsive styling, glass bar, safe areas |
-| `app.js` | Tab routing, demo products, filtering, and local cart |
-| `liquid-glass.js` | Original SVG displacement experiment for supported Chromium browsers, plus touch-responsive highlights for iPhone |
-| `icon.svg` | Original concept leaf icon |
-| `README.md` | This guide |
+| `index.html` | Storefront screens, SVG icon outlines/fills, five icon-only tabs |
+| `styles.css` | Compact rounded UI, position, active highlight and motion |
+| `app.js` | Hash-based tab navigation, demo product search and persistent local cart |
+| `nav-glass-adapter.js` | Sizes upstream glass component to the responsive navigation |
+| `vendor/liquid-glass/displacement-utils.js` | **Unmodified original** by srdavo |
+| `vendor/liquid-glass/glass-element.js` | **Unmodified original** by srdavo |
+| `icon.svg` | Local concept icon |
 
-All paths are relative, so the prototype works from the GitHub Pages subdirectory.
+## Scope and limitations
 
-## Liquid Glass and compatibility
+This is a visual web **prototype**, not the official Signature Market app. Product names and externally hosted photos are representative; displayed prices are illustrative sample values. There is no live inventory, sign-in, delivery, notifications, payment or checkout.
 
-Apple's real Liquid Glass is a native iOS 26 system material with dynamic refraction. This standalone HTML/CSS/JavaScript site cannot invoke that exact native renderer. Instead, it approximates its **appearance** with Safari-supported `-webkit-backdrop-filter`, layered highlights, translucent gradients, and a moving glass lens. It does not claim pixel-perfect equivalence.
+The navigation and demo cart work offline after the required files have been loaded, but externally hosted product images need an internet connection.
 
-All five tabs use custom local SVGs (no icon-library dependency). The inactive/active icons are layered so they fade smoothly between outlines and solid silhouettes. The selection lens is **one element that translates between tabs**, rather than five separate backgrounds fading in and out.
-
-You can tweak the feel in `styles.css`:
-- `.floating-nav`: capsule roundness, transparency, blur, and outer shadow.
-- `.nav-indicator`: selected glass lens, highlight, spring-like movement.
-- `.nav-item` and `.nav-icon`: icon colours, weight, transitions, and touch target.
-
-The glass lens works without JavaScript animation libraries. On devices that request reduced motion, movement is effectively disabled. On devices that request reduced transparency or don't support backdrop blur, the bar becomes opaque so the labels remain readable.
-
-### Inspired by srdavo/liquid-glass
-
-The experimental refraction in this project was **inspired by** [srdavo/liquid-glass](https://github.com/srdavo/liquid-glass), which demonstrates how an SVG displacement map and a backdrop filter can imitate light bending. The original repository has no visible licence file, so this project **does not copy its source files**. Instead, `liquid-glass.js` independently implements a capsule-shaped signed-distance displacement field (generated in a canvas once per size), uses an SVG filter for optional RGB edge separation, and adds a small touch-following surface reflection.
-
-**Important iPhone limitation:** The reference project itself uses a blur fallback on Safari. Its full SVG refraction is not reliably available to ordinary Safari web pages. The iPhone experience here therefore uses Apple's WebKit-compatible backdrop blur with gradients and specular highlights; it cannot be an exact clone of native iOS Liquid Glass. Chromium environments with support for SVG filters in `backdrop-filter` can receive the experimental true displacement treatment. If a browser does not support that technique or transparency is reduced, navigation remains fully functional with the fallback glass surface.
-
-No third-party code, package manager, CDN, build process, or additional setup is required.
-
-## Design direction
-
-The initial design **keeps all five requested destinations** to make comparison easy. For a later production version, I recommend **four primary tabs — Home, Shop, Cart, Profile — with Notifications in the header**. That prioritizes shopping and avoids squeezing long labels into a five-column iPhone tab bar. Here, the visible labels are shortened to *Alerts* and *Cart* for legibility, while their accessible names are *Notifications* and *My Cart*.
-
-This is a **web prototype** of the visual direction, not a replacement build of the native iOS/Android company apps. Backend services, real product prices, inventory, authentication, and purchasing would need proper integration later.
-
-## Brand and sample content
-
-Signature Market is a Malaysian brand focused on accessible healthy snacks and lifestyle products. This prototype references representative product names and externally hosted marketing photos from the company's website. **All displayed prices are illustrative sample values**, not live or verified selling prices. Images require internet access.
-
-- Official shop: https://www.signaturemarket.co/my/marketplace/
-- Apple tab-bar guidance: https://developer.apple.com/design/human-interface-guidelines/tab-bars
-
-Made as an independent design exploration, not an official release.
+- Official Signature Market shop: https://www.signaturemarket.co/my/marketplace/
+- Original Liquid Glass project: https://github.com/srdavo/liquid-glass
+- Apple tab-bar design guidance: https://developer.apple.com/design/human-interface-guidelines/tab-bars

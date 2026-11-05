@@ -16,6 +16,7 @@ Tapping an icon immediately updates the selected tab and URL hash, slides the fr
 - Equal left/right spacing: **20px** on typical iPhones (responsive on narrow devices).
 - **58px** bar height, with 44px interactive tap targets.
 - One subtle active indicator instead of a complicated liquid-glass simulation.
+- Synchronized **430ms** glide and elastic stretch/compression, with the icon filling during the final approach.
 - Respect for reduced-motion and reduced-transparency accessibility settings.
 - No packages, network requests, framework, third-party scripts, build step, or copied glass library.
 

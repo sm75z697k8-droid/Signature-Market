@@ -5,7 +5,10 @@ A **personal, unofficial redesign prototype** for the Signature Market shopping 
 ## What works
 
 - Five floating, rounded tabs: **Home, Products, Notifications (shown as Alerts), My Cart (shown as Cart), Profile**.
-- Soft glass-like background, active-state pill, recognizable inline SVG icons, and a badge showing the number of items in the demo cart.
+- **Liquid-Glass-inspired navigation:** a fully rounded floating capsule, layered translucency, background blur, edge highlights, and one sliding glossy selection lens.
+- **Icon state animation:** outlined SVGs when inactive and filled SVGs when selected, with a short crossfade/scale transition.
+- **Fluid tab switching:** a spring-like 520ms glide between destinations, plus a subtle moving reflection. Rapid taps interrupt and redirect the transition.
+- A cart badge, iPhone safe-area support, and accessibility fallbacks for reduced motion and reduced transparency.
 - Functional navigation with URL hashes, browser Back/Forward, and scroll position remembered per tab.
 - Product search and category chips.
 - Add to cart, quantity +/−, calculated sample subtotal, and demo cart saved in your browser when local storage is available.
@@ -36,6 +39,19 @@ The first publication can take a short time. If you don't see the site, return t
 | `README.md` | This guide |
 
 All paths are relative, so the prototype works from the GitHub Pages subdirectory.
+
+## Liquid Glass and compatibility
+
+Apple's real Liquid Glass is a native iOS 26 system material with dynamic refraction. This standalone HTML/CSS/JavaScript site cannot invoke that exact native renderer. Instead, it approximates its **appearance** with Safari-supported `-webkit-backdrop-filter`, layered highlights, translucent gradients, and a moving glass lens. It does not claim pixel-perfect equivalence.
+
+All five tabs use custom local SVGs (no icon-library dependency). The inactive/active icons are layered so they fade smoothly between outlines and solid silhouettes. The selection lens is **one element that translates between tabs**, rather than five separate backgrounds fading in and out.
+
+You can tweak the feel in `styles.css`:
+- `.floating-nav`: capsule roundness, transparency, blur, and outer shadow.
+- `.nav-indicator`: selected glass lens, highlight, spring-like movement.
+- `.nav-item` and `.nav-icon`: icon colours, weight, transitions, and touch target.
+
+The glass lens works without JavaScript animation libraries. On devices that request reduced motion, movement is effectively disabled. On devices that request reduced transparency or don't support backdrop blur, the bar becomes opaque so the labels remain readable.
 
 ## Design direction
 

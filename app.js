@@ -26,26 +26,29 @@
   let bubbleAnimation = null;
   let targetIndex = 0;
   let fillTimer = null;
+  let selectionEpoch = 0;
 
-  function fillArrivedIcon(index) {
-    if (index !== targetIndex) return;
+  function fillArrivedIcon(index, epoch) {
+    // Guard against a stale callback even if the user revisits the same tab.
+    if (index !== targetIndex || epoch !== selectionEpoch) return;
     window.clearTimeout(fillTimer);
     fillTimer = null;
     links.forEach((link, i) => link.classList.toggle("is-filled", i === index));
   }
 
-  // The pill uses a strongly eased transition and overlaps the destination
-  // before its last settling frames. Fill as it reaches the icon, not after
-  // the entire 500ms spring has finished (which previously felt sluggish).
+  // Keep the slide and elastic distortion on the same 430ms timeline.
+  // The icon starts filling during the pill's final approach, not afterward.
+  const bubbleMotionDurationMs = 430;
   const fillOnOverlapDelayMs = 250;
 
   function animateBubble(distance) {
     if (!bubble || typeof bubble.animate !== "function" || prefersReducedMotion.matches) return;
 
-    // A longer journey gives the bubble slightly more stretch. The animation
-    // lives on the child; its parent handles horizontal translation.
-    const stretch = Math.min(1.23, 1.12 + (distance - 1) * 0.035);
-    const squash = Math.max(0.87, 0.93 - (distance - 1) * 0.015);
+    // Stretch briefly while accelerating, then compress along the travel
+    // axis at landing. Longer jumps stretch only a little more.
+    // The parent handles position; the child handles deformation.
+    const stretch = Math.min(1.18, 1.11 + (distance - 1) * 0.023);
+    const squash = Math.max(0.92, 0.96 - (distance - 1) * 0.012);
 
     // Start from the currently rendered shape during rapid taps, so a second
     // selection doesn't snap the first bounce back to its resting state.
@@ -53,15 +56,20 @@
       ? window.getComputedStyle(bubble).transform
       : "scale(1, 1)";
     if (bubbleAnimation) bubbleAnimation.cancel();
-    bubbleAnimation = bubble.animate([
+    const animation = bubble.animate([
       { transform: currentShape === "none" ? "scale(1, 1)" : currentShape, offset: 0 },
-      { transform: `scale(${stretch}, ${squash})`, offset: 0.30 },
-      { transform: "scale(0.95, 1.06)", offset: 0.72 },
+      { transform: `scale(${stretch}, ${squash})`, offset: 0.22 },
+      { transform: "scale(1.02, 0.99)", offset: 0.56 },
+      { transform: "scale(0.97, 1.04)", offset: 0.78 },
       { transform: "scale(1, 1)", offset: 1 }
     ], {
-      duration: 540,
-      easing: "cubic-bezier(.22, .8, .30, 1)"
+      duration: bubbleMotionDurationMs,
+      easing: "cubic-bezier(.2, .78, .3, 1)"
     });
+    bubbleAnimation = animation;
+    animation.onfinish = () => {
+      if (bubbleAnimation === animation) bubbleAnimation = null;
+    };
   }
 
   function syncSelection() {
@@ -76,21 +84,24 @@
       else link.removeAttribute("aria-current");
     });
 
-    const changed = previousIndex !== null && previousIndex !== index;
+    const isFirstSelection = previousIndex === null;
+    const changed = !isFirstSelection && previousIndex !== index;
     targetIndex = index;
+    if (changed || isFirstSelection) selectionEpoch += 1;
+    const epoch = selectionEpoch;
     if (changed) {
       window.clearTimeout(fillTimer);
       fillTimer = null;
       // Old icon becomes outlined immediately; destination fills on landing.
       links.forEach(link => link.classList.remove("is-filled"));
       if (prefersReducedMotion.matches) {
-        fillArrivedIcon(index);
+        fillArrivedIcon(index, epoch);
       } else {
         animateBubble(Math.abs(index - previousIndex));
-        fillTimer = window.setTimeout(() => fillArrivedIcon(index), fillOnOverlapDelayMs);
+        fillTimer = window.setTimeout(() => fillArrivedIcon(index, epoch), fillOnOverlapDelayMs);
       }
-    } else if (previousIndex === null) {
-      fillArrivedIcon(index);
+    } else if (isFirstSelection) {
+      fillArrivedIcon(index, epoch);
     }
     previousIndex = index;
   }

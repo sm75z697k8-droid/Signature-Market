@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f9f5" />
+  <meta name="description" content="An Apple-inspired Signature Market shopping app concept with floating navigation." />
+  <title>Signature Market — Shopping Concept</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to content</a>
+
+  <svg class="svg-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.8a5.4 5.4 0 0 0-7.6 0L12 6l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.6a5.4 5.4 0 0 0 0-7.6Z"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 2 2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4Z"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="brand" aria-label="Signature Market">
+        <span class="brand-symbol" aria-hidden="true">✳</span>
+        <span class="brand-text">signature<span>market</span></span>
+      </div>
+      <button class="header-icon-button" type="button" id="notificationsTrigger" aria-label="Open notifications" aria-haspopup="dialog" aria-controls="notificationSheet">
+        <svg class="icon"><use href="#i-bell"></use></svg>
+        <span class="unread-dot" id="unreadDot" aria-hidden="true"></span>
+      </button>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+      <section id="page-home" class="page is-active" data-page="home" aria-labelledby="homeHeading">
+        <div class="eyebrow-row"><span class="eyebrow"><span class="eyebrow-dot"></span> GOOD FOOD, GOOD MOOD</span><span class="tiny-leaf">🌿</span></div>
+        <section class="hero" aria-label="Welcome to Signature Market">
+          <div class="hero-copy">
+            <p class="hero-kicker">A better way to snack</p>
+            <h1 id="homeHeading">Little bites.<br /><em>Big joy.</em></h1>
+            <p class="hero-description">Feel-good favourites for your everyday moments.</p>
+            <button class="primary-button hero-cta" type="button" data-go="products">Explore products <svg class="icon"><use href="#i-arrow"></use></svg></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-orbit hero-orbit-one"></div><div class="hero-orbit hero-orbit-two"></div>
+            <span class="hero-art-main">🥜</span><span class="hero-art-small">🍓</span><span class="hero-art-leaf">✦</span>
+          </div>
+        </section>
+        <div class="section-heading">
+          <div><p class="overline">DISCOVER</p><h2>Shop your favourites</h2></div>
+        </div>
+        <div class="category-strip" role="group" aria-label="Shop by category">
+          <button class="category-pill" type="button" data-category="Nuts"><span>🥜</span>Nuts & mixes</button>
+          <button class="category-pill" type="button" data-category="Fruits"><span>🥭</span>Dried fruits</button>
+          <button class="category-pill" type="button" data-category="Breakfast"><span>🥣</span>Breakfast</button>
+          <button class="category-pill" type="button" data-category="Beverages"><span>🍵</span>Beverages</button>
+        </div>
+        <div class="section-heading section-heading-spaced">
+          <div><p class="overline">HANDPICKED FOR YOU</p><h2>Everyday favourites</h2></div>
+          <button class="text-button" type="button" data-go="products">See all <svg class="icon"><use href="#i-chevron"></use></svg></button>
+        </div>
+        <div class="product-grid" id="homeProducts"></div>
+        <p class="disclaimer">Concept UI · Product listings and prices are illustrative.</p>
+      </section>
+
+      <section id="page-products" class="page" data-page="products" aria-labelledby="productsHeading" hidden>
+        <div class="page-intro">
+          <p class="overline">THE GOOD STUFF</p>
+          <h1 id="productsHeading">Explore products<span class="heading-dot">.</span></h1>
+          <p>Something wholesome for every craving.</p>
+        </div>
+        <label class="search-box" for="productSearch">
+          <svg class="icon"><use href="#i-search"></use></svg>
+          <input id="productSearch" type="search" autocomplete="off" placeholder="Search snacks, nuts, and more" />
+        </label>
+        <div class="filter-strip" role="group" aria-label="Product category">
+          <button type="button" class="filter-chip is-selected" data-filter="All" aria-pressed="true">All</button>
+          <button type="button" class="filter-chip" data-filter="Nuts" aria-pressed="false">Nuts & mixes</button>
+          <button type="button" class="filter-chip" data-filter="Fruits" aria-pressed="false">Dried fruits</button>
+          <button type="button" class="filter-chip" data-filter="Breakfast" aria-pressed="false">Breakfast</button>
+          <button type="button" class="filter-chip" data-filter="Beverages" aria-pressed="false">Beverages</button>
+        </div>
+        <div class="results-heading"><h2>Made for mindful munching</h2><span id="productCount">0 items</span></div>
+        <div class="product-grid" id="allProducts"></div>
+        <p id="noResults" class="empty-note" hidden>No products found. Try another search or category.</p>
+        <p class="disclaimer">Concept UI · Product listings and prices are illustrative.</p>
+      </section>
+
+      <section id="page-cart" class="page" data-page="cart" aria-labelledby="cartHeading" hidden>
+        <div class="page-intro">
+          <p class="overline">YOUR GOODIES</p>
+          <h1 id="cartHeading">My cart<span class="heading-dot">.</span></h1>
+          <p>All your little joys in one place.</p>
+        </div>
+        <div id="cartContent" aria-live="polite"></div>
+      </section>
+
+      <section id="page-profile" class="page" data-page="profile" aria-labelledby="profileHeading" hidden>
+        <div class="page-intro">
+          <p class="overline">A LITTLE SPACE FOR YOU</p>
+          <h1 id="profileHeading">My profile<span class="heading-dot">.</span></h1>
+          <p>Your wellness journey starts here.</p>
+        </div>
+        <div class="profile-card">
+          <div class="profile-avatar"><svg class="icon"><use href="#i-user"></use></svg></div>
+          <p class="overline">WELCOME, FRIEND</p>
+          <h2>Hello there 👋</h2>
+          <p>Sign-in and account features can be connected when you add a backend. For now, enjoy exploring the concept.</p>
+          <button class="secondary-button" type="button" data-go="products">Browse products <svg class="icon"><use href="#i-arrow"></use></svg></button>
+        </div>
+        <div class="profile-benefits">
+          <div><span class="benefit-icon">♡</span><span><strong>Thoughtful picks</strong><small>Good things, chosen with care</small></span></div>
+          <div><span class="benefit-icon">✦</span><span><strong>Feel-good living</strong><small>Make little moments healthier</small></span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="floating-nav" aria-label="Primary navigation">
+    <button type="button" class="nav-item is-active" data-nav="home" aria-current="page"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-home"></use></svg></span><span class="nav-label">Home</span></button>
+    <button type="button" class="nav-item" data-nav="products"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-grid"></use></svg></span><span class="nav-label">Products</span></button>
+    <button type="button" class="nav-item" data-nav="cart"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-bag"></use></svg><span class="cart-count" id="cartCount" hidden>0</span></span><span class="nav-label">My Cart</span></button>
+    <button type="button" class="nav-item" data-nav="profile"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-user"></use></svg></span><span class="nav-label">Profile</span></button>
+  </nav>
+
+  <div class="sheet-backdrop" id="notificationBackdrop" hidden></div>
+  <section class="notification-sheet" id="notificationSheet" role="dialog" aria-modal="true" aria-labelledby="notificationsTitle" tabindex="-1" hidden>
+    <div class="sheet-grabber" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <div><p class="overline">STAY IN THE LOOP</p><h2 id="notificationsTitle">Notifications</h2></div>
+      <button type="button" id="closeNotifications" class="header-icon-button" aria-label="Close notifications"><svg class="icon"><use href="#i-close"></use></svg></button>
+    </div>
+    <div id="notificationList" class="notification-list"></div>
+    <button type="button" class="mark-read-button" id="markRead">Mark all as read <svg class="icon"><use href="#i-check"></use></svg></button>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

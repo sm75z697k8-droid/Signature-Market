@@ -206,6 +206,8 @@
     document.title = (route === "home" ? "Home" : route === "alerts" ? "Notifications" : route[0].toUpperCase() + route.slice(1)) +
       " · Signature Market Concept";
     window.scrollTo(0, scrollPositions[route] || 0);
+    // Tell the responsive dock this was a page change, not a scroll gesture.
+    document.dispatchEvent(new CustomEvent("signature-market:routechange", { detail: { route } }));
     if (route === "products" && focusSearchOnOpen) {
       focusSearchOnOpen = false;
       requestAnimationFrame(() => document.getElementById("product-search").focus({ preventScroll: true }));

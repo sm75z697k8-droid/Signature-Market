@@ -1,40 +1,47 @@
 /**
- * Signature Market integration for srdavo/liquid-glass.
+ * Responsive integration for the UNMODIFIED Web Component by srdavo:
+ * https://github.com/srdavo/liquid-glass
  *
- * The upstream files in vendor/liquid-glass/ are intentionally unmodified.
- * This small adapter sizes their <glass-element> to our responsive bottom bar.
- * The glass sits behind—not around—the navigation, so link semantics, hit
- * targets, and the active-pill animation remain controlled by our app.
+ * The wide glass capsule and the small selected-tab glass bubble both use the
+ * original custom element. We only synchronize their dimensions with our UI.
+ * Safari receives the author's existing blur fallback.
  */
 (() => {
   "use strict";
 
   const nav = document.querySelector(".floating-nav");
-  const glass = nav?.querySelector("glass-element.nav-glass");
-  if (!nav || !glass || !customElements.get("glass-element")) return;
+  const capsule = nav?.querySelector("glass-element.nav-glass");
+  const bubble = nav?.querySelector("glass-element.nav-bubble");
+  if (!nav || !capsule || !bubble || !customElements.get("glass-element")) return;
+
+  function updateElement(element, width, height) {
+    if (width < 1 || height < 1) return;
+    const dimensions = {
+      width: Math.round(width),
+      height: Math.round(height),
+      radius: Math.round(height / 2)
+    };
+    // Upstream re-renders when an attribute changes. Avoid redundant changes,
+    // especially when rotating the device or resizing Safari's viewport.
+    Object.entries(dimensions).forEach(([name, value]) => {
+      const stringValue = String(value);
+      if (element.getAttribute(name) !== stringValue) {
+        element.setAttribute(name, stringValue);
+      }
+    });
+  }
 
   let frame = 0;
-  function syncGlassSize() {
+  function syncSize() {
     frame = 0;
-    const bounds = nav.getBoundingClientRect();
-    if (bounds.width < 100 || bounds.height < 40) return;
-
-    const dimensions = {
-      width: Math.round(bounds.width),
-      height: Math.round(bounds.height),
-      radius: Math.round(bounds.height / 2)
-    };
-
-    // The author's component re-renders on attribute changes. Only update
-    // when the dimensions actually change (e.g. rotating an iPhone).
-    for (const [name, value] of Object.entries(dimensions)) {
-      const next = String(value);
-      if (glass.getAttribute(name) !== next) glass.setAttribute(name, next);
-    }
+    // offsetWidth/Height exclude transforms, so the bubble's gentle stretch
+    // animation doesn't accidentally change its glass distortion geometry.
+    updateElement(capsule, nav.offsetWidth, nav.offsetHeight);
+    updateElement(bubble, bubble.offsetWidth, bubble.offsetHeight);
   }
 
   function scheduleSizeSync() {
-    if (!frame) frame = requestAnimationFrame(syncGlassSize);
+    if (!frame) frame = requestAnimationFrame(syncSize);
   }
 
   if (typeof ResizeObserver === "function") {

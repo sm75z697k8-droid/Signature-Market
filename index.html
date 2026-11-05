@@ -13,6 +13,7 @@
   <script src="./vendor/liquid-glass/glass-element.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="./nav-glass-adapter.js" defer></script>
+  <script src="./nav-scroll.js" defer></script>
 </head>
 <body>
   <!-- Small, local icon set so the prototype requires no icon libraries. -->
@@ -144,7 +145,7 @@
   <nav class="floating-nav" aria-label="Primary navigation">
     <glass-element class="nav-glass" width="320" height="54" radius="27" depth="4" blur="3" strength="20" background-color="rgba(255,255,255,0.16)" chromatic-aberration="1" aria-hidden="true"><span></span></glass-element>
     <span class="nav-indicator" aria-hidden="true">
-      <glass-element class="nav-bubble" width="40" height="40" radius="20" depth="5" blur="5" strength="28" background-color="rgba(255,255,255,0.34)" chromatic-aberration="1"><span></span></glass-element>
+      <glass-element class="nav-bubble" width="60" height="40" radius="20" depth="5" blur="4" strength="28" background-color="rgba(255,255,255,0.28)" chromatic-aberration="1"><span></span></glass-element>
     </span>
     <a class="nav-item active" href="#home" data-route="home" aria-label="Home" aria-current="page">
       <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-home"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-home-fill"/></svg></span>

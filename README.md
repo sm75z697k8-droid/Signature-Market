@@ -8,8 +8,8 @@ Five icon-only destinations: **Home, Products, Notifications, My Cart, Profile**
 
 - Thin, rounded **outline icons** become **filled icons** when selected.
 - No visible text labels in the navigation. Every link retains a descriptive `aria-label` for VoiceOver.
-- A small, fully rounded **56px-tall** floating capsule sits **4px above the iPhone safe-area inset**.
-- Five accessible **44px touch targets**, a small cart-quantity badge, and a single smoothly sliding glass selection lens.
+- A subtle, fully rounded **54px-tall** translucent glass capsule sits **2px above the iPhone safe-area inset**.
+- Five accessible **44px touch targets**, a small cart-quantity badge, and a separate **40px circular glass bubble** that slides under the active tab and gently stretches in motion.
 - The current tab is reflected in the URL hash, so browser Back/Forward works and scroll positions are preserved.
 
 ### The original srdavo/liquid-glass component
@@ -21,7 +21,7 @@ Per the design brief, the project contains **unaltered copies of both JavaScript
 - `vendor/liquid-glass/displacement-utils.js` — upstream displacement-map and SVG-filter helpers.
 - `vendor/liquid-glass/glass-element.js` — upstream `<glass-element>` Web Component.
 
-Both files were copied as-is from the upstream `main` branch. We did **not** rewrite the author's component. All layout and integration changes live in our own `styles.css`, `index.html`, and `nav-glass-adapter.js`. The adapter keeps the original glass element sized to the icon-only nav on rotation and screen resize.
+Both files were copied as-is from the upstream `main` branch. We did **not** rewrite the author's component. All layout and integration changes live in our own `styles.css`, `index.html`, and `nav-glass-adapter.js`. The project uses **two instances of the original component**: one for the translucent dock, and one inside the animated selection bubble. The adapter keeps both sized correctly on rotation and screen resize.
 
 **Browser compatibility:** The upstream component's own code explicitly uses a standard blurred-glass fallback on Safari, including iPhone Safari; SVG backdrop displacement works mainly in supported Chromium browsers. On an iPhone you will therefore see the **author's Safari fallback**, not full real-time refractive distortion. This is not a pixel-identical implementation of Apple's native iOS Liquid Glass system. Our small highlights and moving selection pill remain visible on Safari.
 
@@ -46,7 +46,7 @@ If Pages is already configured, new commits to `main` deploy automatically. If t
 | `index.html` | Storefront screens, SVG icon outlines/fills, five icon-only tabs |
 | `styles.css` | Compact rounded UI, position, active highlight and motion |
 | `app.js` | Hash-based tab navigation, demo product search and persistent local cart |
-| `nav-glass-adapter.js` | Sizes upstream glass component to the responsive navigation |
+| `nav-glass-adapter.js` | Sizes both original glass instances (dock and moving selection bubble) |
 | `vendor/liquid-glass/displacement-utils.js` | **Unmodified original** by srdavo |
 | `vendor/liquid-glass/glass-element.js` | **Unmodified original** by srdavo |
 | `icon.svg` | Local concept icon |

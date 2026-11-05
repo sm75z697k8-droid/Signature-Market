@@ -4,12 +4,99 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#edf2ef">
-  <meta name="description" content="A minimal five-button frosted-glass navigation concept.">
-  <title>Signature Market — Navigation Concept</title>
+  <meta name="description" content="Independent mobile-first Signature Market storefront design concept.">
+  <title>Signature Market — Home Concept</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./app.js" defer></script>
+  <script src="./home.js" defer></script>
 </head>
 <body>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="app-shell">
+    <div class="topline">
+      <div class="brand-logo" aria-label="Signature Market concept">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 25C8 20 6 13 8 6c7 .6 11 4.8 11 12"/><path d="M16 25c-1-8 2-14 10-18 2 9-1 16-10 18Z"/></svg>
+        <span>signature<span class="brand-light">market</span></span>
+      </div>
+      <span class="concept-label">Design concept</span>
+    </div>
+    <div class="delivery-row" aria-label="Delivery information">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5.25-8 11-8 11S4 15.25 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+      <div><span class="eyebrow">Delivering in</span><strong>Malaysia</strong></div>
+      <span class="delivery-hint">Check area at checkout</span>
+    </div>
+    <div class="search-sticky">
+      <form class="search-form" id="product-search" role="search">
+        <label for="product-query" class="sr-only">Search products</label>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+        <input id="product-query" type="search" placeholder="Search snacks, nuts, cookies…" enterkeyhint="search" autocomplete="off">
+        <button type="button" class="search-clear" id="search-clear" aria-label="Clear search" hidden>×</button>
+        <button type="submit" class="search-submit" aria-label="Search">Search</button>
+      </form>
+    </div>
+
+    <main id="main-content">
+      <section class="app-screen home-screen" data-screen="home" aria-label="Home">
+        <div class="home-intro"><p class="section-kicker">A little better, every day</p><h1>Good food, good mood.</h1></div>
+
+        <section class="hero-card" aria-label="Featured collection">
+          <div class="hero-copy">
+            <span class="hero-eyebrow">THE GOOD STUFF</span>
+            <h2>Feel-good snacks for every moment.</h2>
+            <p>Everyday favourites, thoughtfully picked.</p>
+            <button type="button" class="hero-action" data-category="snacks">Explore snacks <span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true"><img src="https://down-my.img.susercontent.com/file/1cd3f7d12b465348fddbb6a32cd8d1eb" alt="" decoding="async"></div>
+        </section>
+
+        <div class="section-heading"><div><p class="section-kicker">Start exploring</p><h2>Shop by category</h2></div></div>
+        <div class="category-grid" role="group" aria-label="Shop by category">
+          <button type="button" class="category-card" data-category="snacks"><span class="category-visual category-snacks" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 6c4 2 6 6 6 12M7 6l10 3-4 9-9-6z"/><path d="m13 9 3 7"/></svg></span><span>Snacks</span></button>
+          <button type="button" class="category-card" data-category="nuts"><span class="category-visual category-nuts" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4c-4 0-7 3.4-7 8.3 0 4 2.8 7.7 7 7.7s7-3.7 7-7.7C19 7.4 16 4 12 4Z"/><path d="M12 5c-2 3-2 8.3 0 14"/></svg></span><span>Nuts</span></button>
+          <button type="button" class="category-card" data-category="cookies"><span class="category-visual category-cookies" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13.3A8.6 8.6 0 1 1 10.8 4a5 5 0 0 0 5.9 6.1A5.2 5.2 0 0 0 20 13.3Z"/><path d="M8 11h.01M12.5 15h.01M8.5 17h.01" stroke-width="2.8"/></svg></span><span>Cookies</span></button>
+          <button type="button" class="category-card" data-category="seeds"><span class="category-visual category-seeds" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21V10M12 15C6 15 4.5 10 4 6c5 0 8 2.6 8 9ZM12 12c0-5.5 3-8.2 8-9-.3 5.5-2.5 9-8 9Z"/></svg></span><span>Seeds</span></button>
+        </div>
+
+        <div class="section-heading product-heading"><div><p class="section-kicker">Discover something good</p><h2>Popular picks</h2></div><a href="#products" class="text-link">See all <span aria-hidden="true">→</span></a></div>
+        <p class="price-disclosure">Sample 11.11 promotion prices · Not live</p>
+        <div class="product-grid" id="home-products" aria-label="Featured products"></div>
+
+        <div class="home-ending"><span class="home-ending-icon" aria-hidden="true">✳</span><div><strong>Small choices, better days.</strong><p>Explore the collection and find your next favourite.</p></div><a href="#products" aria-label="Explore all products">→</a></div>
+      </section>
+
+      <section class="app-screen catalog-screen" data-screen="products" aria-label="Products" hidden>
+        <div class="page-title"><p class="section-kicker">Discover the collection</p><h1>Find your favourites.</h1><p>Snacks and little treats worth looking forward to.</p></div>
+        <div class="filter-chips" role="group" aria-label="Filter products">
+          <button type="button" class="filter-chip is-selected" data-category="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-chip" data-category="snacks" aria-pressed="false">Snacks</button>
+          <button type="button" class="filter-chip" data-category="nuts" aria-pressed="false">Nuts</button>
+          <button type="button" class="filter-chip" data-category="cookies" aria-pressed="false">Cookies</button>
+          <button type="button" class="filter-chip" data-category="seeds" aria-pressed="false">Seeds</button>
+        </div>
+        <div class="catalog-summary"><span id="catalog-count">4 products</span><span>Demo offers</span></div>
+        <div class="product-grid" id="catalog-products" aria-label="Search results"></div>
+        <div class="empty-results" id="empty-results" hidden><h2>No matching products</h2><p>Try a different search or category.</p><button class="reset-filters" id="reset-filters" type="button">Show all products</button></div>
+      </section>
+
+      <section class="app-screen utility-screen" data-screen="cart" aria-label="Your cart" hidden>
+        <div class="page-title"><p class="section-kicker">Your selection</p><h1>My Cart <span class="demo-tag">Demo</span></h1><p>Items here are stored only while this preview is open.</p></div>
+        <div id="cart-items" class="cart-items"></div>
+        <div id="cart-empty" class="cart-empty"><span aria-hidden="true">♡</span><h2>Your cart is empty</h2><p>Browse our picks and add something you like.</p><a href="#products" class="primary-link">Explore products</a></div>
+        <div id="cart-summary" class="cart-summary" hidden><div><span>Demo subtotal</span><strong id="cart-subtotal">RM 0.00</strong></div><p>Illustrative only · No payment or order will be placed.</p></div>
+      </section>
+
+      <section class="app-screen utility-screen" data-screen="notifications" aria-label="Notifications" hidden>
+        <div class="simple-state"><span class="state-icon" aria-hidden="true">✧</span><h1>All caught up.</h1><p>Notifications are not connected in this concept yet.</p><a href="#home" class="primary-link">Back to Home</a></div>
+      </section>
+      <section class="app-screen utility-screen" data-screen="profile" aria-label="Profile" hidden>
+        <div class="simple-state"><span class="state-icon" aria-hidden="true">◌</span><h1>Your space, soon.</h1><p>Account sign-in and personal details aren't available in this prototype.</p><a href="#home" class="primary-link">Back to Home</a></div>
+      </section>
+    </main>
+    <footer class="concept-footer">Independent Signature Market design study · Not an official store.</footer>
+  </div>
+  <div class="feedback-toast" id="feedback-toast" role="status" aria-live="polite" hidden></div>
+
   <!-- Navigation only. No storefront, fake product screens, or third-party glass scripts. -->
   <nav class="floating-nav" aria-label="Primary navigation">
     <span class="nav-indicator" aria-hidden="true"><span class="nav-bubble"></span></span>

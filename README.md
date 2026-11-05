@@ -1,44 +1,37 @@
-# Signature Market — Navigation Only
+# Signature Market — Mobile Storefront Concept
 
-A clean restart of the experimental UI. **This repository currently contains only a five-button frosted-glass navigation bar** on a quiet background. It is a standalone visual prototype, not the official Signature Market app.
+An **independent, unofficial** mobile-first UI/UX redesign study. It is not connected to Signature Market accounts, stock, checkout, payments, or delivery services.
 
-## Five destinations
+## What's here
 
-Home · Products · Notifications · My Cart · Profile
+- A new compact Home screen with delivery context, persistent search, a short featured banner, and browsable categories.
+- Four compact product cards with original product photography linked from publicly available online images. If a host blocks an image, the card shows an accessible fallback.
+- A Products tab with category filters and working search.
+- A working **demo-only** Add to Cart interaction, item count, remove controls, and illustrative subtotal. Cart contents stay in memory and disappear on refresh. **No orders are placed.**
+- The existing five-button floating frosted-glass navigation, rounded outline/filled icons and ~430ms elastic bubble preserved without edits to its animation script.
+- Placeholder Notifications and Profile tabs, visibly marked as incomplete.
 
-Each button has a **soft, rounded 1.45px outline icon** and a matching solid icon. When you switch tabs, the glass pill slides first; the new icon begins its quick 110ms fill crossfade after about 250ms, as the eased pill overlaps the destination, rather than waiting until the entire spring animation ends. The previous icon returns to its outline immediately. There are no visible labels, but each icon retains an accessible name.
+## Product data / attribution
 
-Tapping an icon immediately updates the selected tab and URL hash, slides the frosted bubble, then fills the destination icon as the pill gets close to its final position. Rapid taps cancel stale icon-fill timers; reduced-motion settings fill the icon immediately. Browser Back/Forward restores the selected icon. **There are no content screens yet**; the buttons only demonstrate navigation states.
+Product names, sizes and the illustrative 11.11 promotion price **RM11.00** were checked against Signature Market's public November 2026 promotional listing and the provided app screenshots:
 
-## Visual choices
+https://signaturesnack.com/my/marketplace/
 
-- Narrow, fully rounded, frosted-glass capsule using native CSS `backdrop-filter`.
-- Equal left/right spacing: **20px** on typical iPhones (responsive on narrow devices).
-- **58px** bar height, with 44px interactive tap targets.
-- One subtle active indicator instead of a complicated liquid-glass simulation.
-- Synchronized **430ms** glide and elastic stretch/compression, with the icon filling during the final approach.
-- Respect for reduced-motion and reduced-transparency accessibility settings.
-- No packages, network requests, framework, third-party scripts, build step, or copied glass library.
+The comparison prices in this demo are **RM21.80** for Real Tempeh Chips (Original Flavour), and **RM20.00** for Cookies, Crunchy 5 Nuts Mix and Classic Seed Mix. These are **static example prices**, not live quotes or checkout totals; product images may show an alternative pack design or size.
 
-## Safari long-press and zoom behaviour
+External images are hosted by Lazada, Shopee and Signature Market, and may change or fail to load. This is a non-commercial design demonstration; rights and usage permission should be reviewed before any commercial launch.
 
-This navigation-only prototype suppresses Safari's link preview / callout when holding a tab, disables selecting or dragging its icons, and blocks common double-tap and pinch-to-zoom gestures. The settings are in the viewport meta tag, `styles.css`, and the nav handlers in `app.js`.
+## Implementation
 
-**Accessibility trade-off:** Restricting pinch zoom can make a real shopping app harder to use for people who need magnification. For production, keep the long-press suppression on navigation controls but remove `user-scalable=no`, `maximum-scale=1`, and the global `gesturestart`/`gesturechange` preventions so users can zoom normally. System-level iOS magnification and some browser gestures may still remain available.
+Vanilla HTML, CSS and JavaScript. No bundler or dependencies.
 
-## Files
+- \`index.html\`: content sections and the preserved five-icon navigation.
+- \`styles.css\`: original nav styles plus additional storefront layouts and responsive rules.
+- \`app.js\`: original selection and bubble animation, **not modified**.
+- \`home.js\`: product presentation, routes, filters, search, and demo cart.
 
-- `index.html` — just the five navigation icons and semantic links.
-- `styles.css` — background, frosted-glass styling, responsive positioning.
-- `app.js` — active tab state synchronized to the URL hash.
-- `README.md` — this document.
+## Limitations before production
 
-The old storefront, mock cart, custom animations, and experimental vendor scripts were removed from the **current branch**. Their commits remain in Git history if you ever need them.
+Replace static prices with a trusted product API, use licensed and optimized locally hosted product imagery, implement authenticated cart/checkout flows, confirm delivery estimates by postcode, and verify user journeys on real Safari devices. Zoom restrictions from the earlier navigation-only prototype remain and should be reconsidered for accessibility before launch.
 
-## iPhone preview
-
-Enable **Settings → Pages → Deploy from a branch → main → /(root)** if you have not already. Visit:
-
-https://sm75z697k8-droid.github.io/Signature-Market/
-
-Refresh Safari after a new deployment to clear any cached version.
+Preview: https://sm75z697k8-droid.github.io/Signature-Market/

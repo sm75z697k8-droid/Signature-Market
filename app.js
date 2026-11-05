@@ -57,14 +57,15 @@
       : "scale(1, 1)";
     if (bubbleAnimation) bubbleAnimation.cancel();
     const animation = bubble.animate([
-      { transform: currentShape === "none" ? "scale(1, 1)" : currentShape, offset: 0 },
-      { transform: `scale(${stretch}, ${squash})`, offset: 0.22 },
-      { transform: "scale(1.02, 0.99)", offset: 0.56 },
-      { transform: "scale(0.97, 1.04)", offset: 0.78 },
+      { transform: currentShape === "none" ? "scale(1, 1)" : currentShape, offset: 0, easing: "ease-out" },
+      { transform: `scale(${stretch}, ${squash})`, offset: 0.19, easing: "ease-in-out" },
+      { transform: "scale(1.02, 0.99)", offset: 0.56, easing: "ease-in" },
+      { transform: "scale(0.97, 1.04)", offset: 0.80, easing: "ease-out" },
       { transform: "scale(1, 1)", offset: 1 }
     ], {
       duration: bubbleMotionDurationMs,
-      easing: "cubic-bezier(.2, .78, .3, 1)"
+      // Segment easing keeps the stretch near acceleration and the squash at landing.
+      easing: "linear"
     });
     bubbleAnimation = animation;
     animation.onfinish = () => {

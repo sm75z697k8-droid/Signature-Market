@@ -129,31 +129,31 @@ h1 em { color: var(--green); font-style: normal; }
 .profile-links small { display: block; margin-top: 5px; font-weight: 400; font-size: 10px; color: #8b9589; }
 .link-arrow { width: 15px; height: 15px; color: #899b8e; }
 .concept-footer { text-align: center; color: #a3aaa0; font-size: 10px; line-height: 1.55; margin: 32px 0 0; padding: 0 12px; }
-/* Compact, icon-only bottom navigation.
-   The optical glass material is provided by the upstream glass-element Web
-   Component (vendor/liquid-glass/). This sheet handles layout and fallback.
-   The five hit areas remain at least 44pt high for iPhone accessibility. */
+/* Two-layer glass dock.
+   The unmodified srdavo <glass-element> provides both the soft capsule and
+   the separate refractive selection bubble, with Safari's blur fallback.
+   Layout and animation remain ordinary CSS for smooth iPhone navigation. */
 .floating-nav {
   --active-translate: 0%;
   position: fixed;
   z-index: 50;
   left: 50%;
-  bottom: calc(4px + env(safe-area-inset-bottom, 0px));
-  width: min(calc(100% - 48px), 330px);
-  height: 56px;
-  padding: 5px;
+  bottom: calc(2px + env(safe-area-inset-bottom, 0px));
+  width: min(calc(100% - 44px), 316px);
+  height: 54px;
+  padding: 4px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
+  border: 1px solid rgba(255, 255, 255, .49);
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.66);
-  background: rgba(244,250,245,.21);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  background: rgba(243, 251, 246, .09);
+  -webkit-backdrop-filter: blur(3px) saturate(125%);
+  backdrop-filter: blur(3px) saturate(125%);
   box-shadow:
-    0 8px 25px rgba(33,53,40,.14),
-    0 2px 5px rgba(27,41,30,.07),
-    inset 0 1px 1px rgba(255,255,255,.8);
+    0 9px 25px rgba(31, 54, 37, .11),
+    0 2px 5px rgba(25, 41, 29, .04),
+    inset 0 1px 1px rgba(255, 255, 255, .55);
   transform: translateX(-50%);
   isolation: isolate;
 }
@@ -161,92 +161,116 @@ h1 em { color: var(--green); font-style: normal; }
   position: absolute;
   z-index: 0;
   inset: 0;
-  display: block;
   width: 100%;
   height: 100%;
+  display: block;
   overflow: hidden;
   border-radius: inherit;
   pointer-events: none;
 }
-/* Keep reflections gentle, so the five icons are easy to distinguish. */
 .floating-nav::after {
-  content: "";
   position: absolute;
+  content: "";
+  inset: 1px;
   z-index: 0;
-  inset: 0;
-  border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(165deg,
-    rgba(255,255,255,.39) 0%,
-    rgba(255,255,255,.07) 34%,
-    transparent 65%,
-    rgba(223,243,230,.17) 100%);
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,.65),
-    inset 0 -1px 1px rgba(255,255,255,.27);
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, .22);
+  background: linear-gradient(165deg, rgba(255, 255, 255, .30), transparent 34%, rgba(217, 240, 226, .06) 100%);
 }
 .nav-indicator {
   position: absolute;
   z-index: 1;
-  left: 6px;
-  top: 6px;
-  width: calc((100% - 12px) / 5);
-  height: calc(100% - 12px);
-  border-radius: 999px;
+  left: 5px;
+  top: 5px;
+  width: calc((100% - 10px) / 5);
+  height: 44px;
+  display: grid;
+  place-items: center;
   pointer-events: none;
-  background: linear-gradient(150deg,
-    rgba(255,255,255,.58) 0%,
-    rgba(234,249,240,.41) 53%,
-    rgba(206,236,218,.36) 100%);
-  border: 1px solid rgba(255,255,255,.55);
-  box-shadow:
-    0 2px 8px rgba(36,86,54,.11),
-    inset 0 1px 2px rgba(255,255,255,.77),
-    inset 0 -1px 2px rgba(93,151,106,.12);
-  -webkit-backdrop-filter: blur(7px) saturate(135%);
-  backdrop-filter: blur(7px) saturate(135%);
   transform: translate3d(var(--active-translate), 0, 0);
-  transition: transform 420ms cubic-bezier(.22, 1.08, .35, 1);
+  transition: transform 460ms cubic-bezier(.23, 1.12, .32, 1);
+  will-change: transform;
 }
 .floating-nav.nav-initializing .nav-indicator { transition: none; }
+/* A smaller round lens, independent of the wider glass capsule. */
+.nav-indicator::before,
+.nav-indicator::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.nav-indicator::before {
+  background: rgba(245, 255, 249, .24);
+  border: 1px solid rgba(255, 255, 255, .74);
+  -webkit-backdrop-filter: blur(9px) saturate(145%);
+  backdrop-filter: blur(9px) saturate(145%);
+  box-shadow:
+    0 2px 9px rgba(33, 77, 46, .10),
+    inset 0 1px 2px rgba(255, 255, 255, .80),
+    inset 0 -1px 2px rgba(93, 154, 111, .11);
+}
+.nav-bubble {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  display: block;
+  overflow: hidden;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: transform 330ms cubic-bezier(.23, 1.1, .4, 1);
+}
+.nav-indicator::after {
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, .36);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .72);
+  background: linear-gradient(160deg, rgba(255,255,255,.21), transparent 42%, rgba(203,236,216,.06));
+}
+.floating-nav.is-moving .nav-bubble {
+  transform: scaleX(1.075) scaleY(.97);
+}
 .nav-item {
   position: relative;
-  z-index: 2;
-  min-width: 0;
+  z-index: 3;
   width: 100%;
+  min-width: 0;
   height: 44px;
   min-height: 44px;
   display: grid;
   place-items: center;
   border-radius: 999px;
-  text-decoration: none;
-  color: #68746a;
+  color: #67766b;
   background: transparent;
+  text-decoration: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transition: color 240ms ease, transform 180ms ease;
 }
-.nav-item.active { color: #26563d; }
-.nav-item:active { transform: scale(.93); }
+.nav-item.active { color: #245b3e; }
+.nav-item:active { transform: scale(.95); }
 .nav-icon {
   position: relative;
   display: block;
-  width: 23px;
-  height: 23px;
-  transition: transform 350ms cubic-bezier(.2, 1.12, .4, 1);
+  width: 22px;
+  height: 22px;
+  transition: transform 300ms cubic-bezier(.2, 1.1, .4, 1);
 }
 .nav-icon .icon {
   position: absolute;
   inset: 0;
-  width: 23px;
-  height: 23px;
-  stroke-width: 1.5;
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
   transition: opacity 190ms ease, transform 290ms ease;
 }
 .nav-icon-outline { opacity: 1; transform: scale(1); }
-.nav-icon-filled { opacity: 0; transform: scale(.89); }
+.nav-icon-filled { opacity: 0; transform: scale(.91); }
 .nav-item.active .nav-icon { transform: scale(1.035); }
 .nav-item.active .nav-icon-outline { opacity: 0; transform: scale(.9); }
 .nav-item.active .nav-icon-filled { opacity: 1; transform: scale(1); }
@@ -265,11 +289,11 @@ h1 em { color: var(--green); font-style: normal; }
   text-align: center;
   border: 2px solid white;
   border-radius: 99px;
-  box-shadow: 0 1px 3px rgba(82,41,25,.13);
+  box-shadow: 0 1px 3px rgba(82, 41, 25, .13);
 }
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .floating-nav { background: rgba(247,251,247,.96); }
-  .nav-indicator { background: #e5f1e7; }
+  .floating-nav { background: rgba(247, 251, 247, .94); }
+  .nav-indicator::before { background: #deeee3; }
 }
 @media (prefers-reduced-transparency: reduce) {
   .floating-nav {
@@ -277,8 +301,8 @@ h1 em { color: var(--green); font-style: normal; }
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  .nav-glass { display: none; }
-  .nav-indicator {
+  .nav-glass, .nav-bubble { display: none; }
+  .nav-indicator::before {
     background: #dcefe3;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;

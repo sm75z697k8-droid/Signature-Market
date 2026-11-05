@@ -8,16 +8,19 @@
   <title>Signature Market — Redesign Concept</title>
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <link rel="stylesheet" href="./styles.css">
+  <!-- Unmodified upstream Web Component from github.com/srdavo/liquid-glass -->
+  <script src="./vendor/liquid-glass/displacement-utils.js" defer></script>
+  <script src="./vendor/liquid-glass/glass-element.js" defer></script>
   <script src="./app.js" defer></script>
-  <script src="./liquid-glass.js" defer></script>
+  <script src="./nav-glass-adapter.js" defer></script>
 </head>
 <body>
   <!-- Small, local icon set so the prototype requires no icon libraries. -->
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10a1 1 0 0 1-1 1h-5.5v-7h-4v7H4.5a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3.7 10 7.3-6.1a1.6 1.6 0 0 1 2 0l7.3 6.1c.4.35.65.85.65 1.38v7.7c0 1-.82 1.82-1.82 1.82H15v-6.25a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v6.25H4.85c-1 0-1.82-.82-1.82-1.82v-7.7c0-.53.24-1.03.67-1.38Z"/></symbol>
     <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7.5-3 9h18c0-1.5-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
-    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1.2 12H3.8L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6.6 8.5h10.8a2 2 0 0 1 2 1.8l.9 8.4a2 2 0 0 1-2 2.2H5.7a2 2 0 0 1-2-2.2l.9-8.4a2 2 0 0 1 2-1.8Z"/><path d="M9 9V6.8a3 3 0 0 1 6 0V9"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
     <!-- Separate solid silhouettes for the active tab; inactive tabs retain thin outlines. -->
     <symbol id="i-home-fill" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2.2c-.4 0-.8.15-1.1.41L2.9 9.5a1.8 1.8 0 0 0-.65 1.37v8.88A2.25 2.25 0 0 0 4.5 22H9v-7.2c0-.4.32-.72.72-.72h4.56c.4 0 .72.32.72.72V22h4.5a2.25 2.25 0 0 0 2.25-2.25v-8.88c0-.53-.24-1.03-.65-1.37l-8-6.89c-.3-.26-.7-.41-1.1-.41Z"/></symbol>
@@ -139,21 +142,22 @@
   </div>
 
   <nav class="floating-nav" aria-label="Primary navigation">
+    <glass-element class="nav-glass" width="320" height="56" radius="28" depth="6" blur="7" strength="24" background-color="rgba(255,255,255,0.32)" chromatic-aberration="1" aria-hidden="true"><span></span></glass-element>
     <span class="nav-indicator" aria-hidden="true"></span>
     <a class="nav-item active" href="#home" data-route="home" aria-label="Home" aria-current="page">
-      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-home"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-home-fill"/></svg></span><span class="nav-label">Home</span>
+      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-home"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-home-fill"/></svg></span>
     </a>
     <a class="nav-item" href="#products" data-route="products" aria-label="Products">
-      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-grid"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-grid-fill"/></svg></span><span class="nav-label">Products</span>
+      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-grid"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-grid-fill"/></svg></span>
     </a>
     <a class="nav-item" href="#alerts" data-route="alerts" aria-label="Notifications">
-      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-bell"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-bell-fill"/></svg></span><span class="nav-label">Alerts</span>
+      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-bell"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-bell-fill"/></svg></span>
     </a>
     <a class="nav-item" href="#cart" data-route="cart" aria-label="My Cart">
-      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-bag-fill"/></svg><span class="cart-badge" id="cart-badge" hidden></span></span><span class="nav-label">Cart</span>
+      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-bag-fill"/></svg><span class="cart-badge" id="cart-badge" hidden></span></span>
     </a>
     <a class="nav-item" href="#profile" data-route="profile" aria-label="Profile">
-      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-user"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-user-fill"/></svg></span><span class="nav-label">Profile</span>
+      <span class="nav-icon"><svg class="icon nav-icon-outline" aria-hidden="true"><use href="#i-user"/></svg><svg class="icon nav-icon-filled" aria-hidden="true"><use href="#i-user-fill"/></svg></span>
     </a>
   </nav>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>

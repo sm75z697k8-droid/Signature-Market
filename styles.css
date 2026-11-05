@@ -482,3 +482,6 @@ main { width: min(100% - 72px, 1216px); margin-inline: auto; padding: 18px 0 110
   .quick-view-price { margin-bottom: 16px; font-size: 24px; }
   .quick-view-close { top: 22px; right: 22px; }
 }
+
+/* Keep the storefront edge-to-edge at desktop widths (supersedes the earlier phone mockup wrapper). */
+@media (min-width: 540px) { body { padding: 0; } }

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f9f5" />
+  <meta name="description" content="An unofficial, modern Signature Market shopping web app concept. Discover feel-good snacks with an elegant, responsive storefront." />
+  <title>Signature Market — Feel Good Everyday</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Skip to content</a>
+
+  <svg class="svg-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.8a5.4 5.4 0 0 0-7.6 0L12 6l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.6a5.4 5.4 0 0 0 0-7.6Z"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 2 2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4Z"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M21 3C9 2 4 9 4 16a5 5 0 0 0 5 5c7 0 14-5 12-18Z"/><path d="M4 20c2-5 7-9 13-12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 4 8 8 10 4-2 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M12 9v12M3 13h18"/><path d="M12 9C2 9 6 2 10 5c1 1 2 4 2 4ZM12 9c10 0 6-7 2-4-1 1-2 4-2 4Z"/></symbol>
+  </svg>
+
+  <div class="announcement-bar">
+    <div class="wide-wrap announcement-inner">
+      <span><span aria-hidden="true">✦</span> Feel-good food, made for everyday moments</span>
+      <span class="announcement-secondary">A fresh take on healthy living</span>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand" aria-label="Signature Market concept">
+          <span class="brand-symbol" aria-hidden="true">✳</span>
+          <span class="brand-text">signature<span>market</span></span>
+        </div>
+
+        <nav class="desktop-navigation" aria-label="Desktop primary navigation">
+          <button type="button" class="desktop-nav-item is-active" data-nav="home" aria-current="page">Home</button>
+          <button type="button" class="desktop-nav-item" data-nav="products">Shop products</button>
+        </nav>
+
+        <div class="header-actions">
+          <button class="header-icon-button desktop-search-button" type="button" id="headerSearch" aria-label="Search products">
+            <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+          </button>
+          <button class="header-icon-button" type="button" id="notificationsTrigger" aria-label="Open notifications" aria-haspopup="dialog" aria-controls="notificationSheet">
+            <svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg>
+            <span class="unread-dot" id="unreadDot" aria-hidden="true"></span>
+          </button>
+          <button class="header-icon-button desktop-only-action" type="button" data-nav="cart" aria-label="My Cart, 0 items">
+            <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg><span class="header-cart-count" id="headerCartCount" hidden>0</span>
+          </button>
+          <button class="header-icon-button desktop-only-action" type="button" data-nav="profile" aria-label="My profile">
+            <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+      <section id="page-home" class="page is-active" data-page="home" aria-labelledby="homeHeading">
+        <div class="eyebrow-row"><span class="eyebrow"><span class="eyebrow-dot"></span> FRESH, WHOLESOME & DELICIOUS</span><span class="tiny-leaf">A LITTLE GOODNESS, DAILY ✳</span></div>
+        <section class="hero" aria-label="Welcome to Signature Market">
+          <div class="hero-copy">
+            <p class="hero-kicker"><span class="hero-kicker-star">✳</span> NOURISHING YOUR EVERYDAY</p>
+            <h1 id="homeHeading">Feel good.<br /><em>Every day.</em></h1>
+            <p class="hero-description">Discover wholesome snacks, comforting favourites and little joys worth sharing.</p>
+            <div class="hero-buttons">
+              <button class="primary-button hero-cta" type="button" data-go="products">Explore our collection <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
+              <span class="hero-side-note"><span aria-hidden="true">✦ ✦ ✦</span> Curated with care</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="hero-orbit hero-orbit-one"></div><div class="hero-orbit hero-orbit-two"></div>
+            <div class="hero-sticker hero-sticker-top">good vibes<br />only ✳</div>
+            <div class="hero-product hero-product-main"><span>🥜</span><small>feel-good<br />crunch</small></div>
+            <div class="hero-product hero-product-second"><span>🥭</span><small>sweet little<br />moments</small></div>
+            <span class="hero-sparkle hero-sparkle-one">✦</span><span class="hero-sparkle hero-sparkle-two">✳</span>
+            <div class="hero-bottom-caption">Made for little moments of joy <span>↗</span></div>
+          </div>
+        </section>
+
+        <div class="promise-bar" aria-label="Store values">
+          <div><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg><span>Mindfully selected</span></div>
+          <span class="promise-separator" aria-hidden="true"></span>
+          <div><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg><span>Made for feel-good living</span></div>
+          <span class="promise-separator" aria-hidden="true"></span>
+          <div><svg class="icon" aria-hidden="true"><use href="#i-gift"></use></svg><span>Joy in every bite</span></div>
+        </div>
+        <div class="section-heading">
+          <div><p class="overline">SHOP BY MOOD</p><h2>Find your kind of goodness<span class="heading-dot">.</span></h2></div>
+        </div>
+        <div class="category-strip" role="group" aria-label="Shop by category">
+          <button class="category-pill category-nuts" type="button" data-category="Nuts"><span class="category-emoji">🥜</span><span class="category-name">Nuts & mixes</span><span class="category-arrow" aria-hidden="true">↗</span></button>
+          <button class="category-pill category-fruits" type="button" data-category="Fruits"><span class="category-emoji">🥭</span><span class="category-name">Dried fruits</span><span class="category-arrow" aria-hidden="true">↗</span></button>
+          <button class="category-pill category-breakfast" type="button" data-category="Breakfast"><span class="category-emoji">🥣</span><span class="category-name">Breakfast</span><span class="category-arrow" aria-hidden="true">↗</span></button>
+          <button class="category-pill category-beverages" type="button" data-category="Beverages"><span class="category-emoji">🍵</span><span class="category-name">Beverages</span><span class="category-arrow" aria-hidden="true">↗</span></button>
+        </div>
+        <div class="section-heading section-heading-spaced">
+          <div><p class="overline">A LITTLE BIT OF EVERYTHING</p><h2>Fan favourites<span class="heading-dot">.</span></h2></div>
+          <button class="text-button" type="button" data-go="products">See all <svg class="icon"><use href="#i-chevron"></use></svg></button>
+        </div>
+        <div class="product-grid" id="homeProducts"></div>
+        <section class="editorial-section" aria-labelledby="editorialHeading">
+          <div class="editorial-visual" aria-hidden="true"><span class="editorial-star">✳</span><span class="editorial-bowl">🥣</span><span class="editorial-fruit">🍓</span></div>
+          <div class="editorial-copy">
+            <p class="overline">A BETTER EVERYDAY STARTS HERE</p>
+            <h2 id="editorialHeading">Small choices.<br /><em>Big feel-good energy.</em></h2>
+            <p>From your morning ritual to your afternoon pick-me-up, we're here for those delicious little moments.</p>
+            <button class="secondary-button" type="button" data-go="products">Shop feel-good picks <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
+          </div>
+        </section>
+        <p class="disclaimer">Unofficial redesign concept. Products and prices shown are illustrative.</p>
+      </section>
+
+      <section id="page-products" class="page" data-page="products" aria-labelledby="productsHeading" hidden>
+        <div class="page-intro">
+          <p class="overline">THE GOOD STUFF</p>
+          <h1 id="productsHeading">Explore products<span class="heading-dot">.</span></h1>
+          <p>Something wholesome for every craving.</p>
+        </div>
+        <label class="search-box" for="productSearch">
+          <svg class="icon"><use href="#i-search"></use></svg>
+          <input id="productSearch" type="search" autocomplete="off" placeholder="Search snacks, nuts, and more" />
+        </label>
+        <div class="filter-strip" role="group" aria-label="Product category">
+          <button type="button" class="filter-chip is-selected" data-filter="All" aria-pressed="true">All</button>
+          <button type="button" class="filter-chip" data-filter="Nuts" aria-pressed="false">Nuts & mixes</button>
+          <button type="button" class="filter-chip" data-filter="Fruits" aria-pressed="false">Dried fruits</button>
+          <button type="button" class="filter-chip" data-filter="Breakfast" aria-pressed="false">Breakfast</button>
+          <button type="button" class="filter-chip" data-filter="Beverages" aria-pressed="false">Beverages</button>
+        </div>
+        <div class="results-heading"><h2>Made for mindful munching</h2><span id="productCount">0 items</span></div>
+        <div class="product-grid" id="allProducts"></div>
+        <p id="noResults" class="empty-note" hidden>No products found. Try another search or category.</p>
+        <p class="disclaimer">Unofficial redesign concept. Products and prices shown are illustrative.</p>
+      </section>
+
+      <section id="page-cart" class="page" data-page="cart" aria-labelledby="cartHeading" hidden>
+        <div class="page-intro">
+          <p class="overline">YOUR GOODIES</p>
+          <h1 id="cartHeading">My cart<span class="heading-dot">.</span></h1>
+          <p>All your little joys in one place.</p>
+        </div>
+        <div id="cartContent" aria-live="polite"></div>
+      </section>
+
+      <section id="page-profile" class="page" data-page="profile" aria-labelledby="profileHeading" hidden>
+        <div class="page-intro">
+          <p class="overline">A LITTLE SPACE FOR YOU</p>
+          <h1 id="profileHeading">My profile<span class="heading-dot">.</span></h1>
+          <p>Your wellness journey starts here.</p>
+        </div>
+        <div class="profile-card">
+          <div class="profile-avatar"><svg class="icon"><use href="#i-user"></use></svg></div>
+          <p class="overline">WELCOME, FRIEND</p>
+          <h2>Hello there 👋</h2>
+          <p>Sign-in and account features can be connected when you add a backend. For now, enjoy exploring the concept.</p>
+          <button class="secondary-button" type="button" data-go="products">Browse products <svg class="icon"><use href="#i-arrow"></use></svg></button>
+        </div>
+        <div class="profile-benefits">
+          <div><span class="benefit-icon">♡</span><span><strong>Thoughtful picks</strong><small>Good things, chosen with care</small></span></div>
+          <div><span class="benefit-icon">✦</span><span><strong>Feel-good living</strong><small>Make little moments healthier</small></span></div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand-group">
+            <div class="brand footer-brand"><span class="brand-symbol" aria-hidden="true">✳</span><span class="brand-text">signature<span>market</span></span></div>
+            <p>A little goodness in every day. An independent design concept inspired by wholesome living.</p>
+          </div>
+          <div class="footer-links">
+            <div><h3>Explore</h3><button type="button" data-go="home">Home</button><button type="button" data-go="products">Products</button></div>
+            <div><h3>Your space</h3><button type="button" data-go="cart">My Cart</button><button type="button" data-go="profile">Profile</button></div>
+          </div>
+        </div>
+        <div class="footer-bottom"><span>© 2026 Signature Market · Unofficial UI concept</span><span>Designed for the everyday good ✳</span></div>
+      </div>
+    </footer>
+  </div>
+
+  <nav class="floating-nav" aria-label="Primary navigation">
+    <button type="button" class="nav-item is-active" data-nav="home" aria-current="page"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-home"></use></svg></span><span class="nav-label">Home</span></button>
+    <button type="button" class="nav-item" data-nav="products"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-grid"></use></svg></span><span class="nav-label">Products</span></button>
+    <button type="button" class="nav-item" data-nav="cart"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-bag"></use></svg><span class="cart-count" id="cartCount" hidden>0</span></span><span class="nav-label">My Cart</span></button>
+    <button type="button" class="nav-item" data-nav="profile"><span class="nav-icon-wrap"><svg class="icon"><use href="#i-user"></use></svg></span><span class="nav-label">Profile</span></button>
+  </nav>
+
+  <div class="sheet-backdrop" id="notificationBackdrop" hidden></div>
+  <section class="notification-sheet" id="notificationSheet" role="dialog" aria-modal="true" aria-labelledby="notificationsTitle" tabindex="-1" hidden>
+    <div class="sheet-grabber" aria-hidden="true"></div>
+    <div class="sheet-header">
+      <div><p class="overline">STAY IN THE LOOP</p><h2 id="notificationsTitle">Notifications</h2></div>
+      <button type="button" id="closeNotifications" class="header-icon-button" aria-label="Close notifications"><svg class="icon"><use href="#i-close"></use></svg></button>
+    </div>
+    <div id="notificationList" class="notification-list"></div>
+    <button type="button" class="mark-read-button" id="markRead">Mark all as read <svg class="icon"><use href="#i-check"></use></svg></button>
+  </section>
+
+  <div class="sheet-backdrop quick-view-backdrop" id="quickViewBackdrop" hidden></div>
+  <section class="quick-view-dialog" id="quickViewDialog" role="dialog" aria-modal="true" aria-labelledby="quickViewTitle" tabindex="-1" hidden>
+    <button type="button" class="header-icon-button quick-view-close" id="closeQuickView" aria-label="Close product details"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    <div id="quickViewDetails"></div>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

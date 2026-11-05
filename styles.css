@@ -62,7 +62,8 @@ body {
   width: calc((100% - 12px) / 5);
   height: 44px;
   transform: translate3d(var(--active-offset), 0, 0);
-  transition: transform 500ms cubic-bezier(.22, 1.13, .36, 1);
+  /* A fast, decelerating glide. The child handles the soft landing deformation. */
+  transition: transform 430ms cubic-bezier(.2, .84, .27, 1);
 }
 
 .nav-bubble {

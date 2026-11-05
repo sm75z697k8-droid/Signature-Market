@@ -213,6 +213,12 @@
     <button type="button" class="mark-read-button" id="markRead">Mark all as read <svg class="icon"><use href="#i-check"></use></svg></button>
   </section>
 
+  <div class="sheet-backdrop quick-view-backdrop" id="quickViewBackdrop" hidden></div>
+  <section class="quick-view-dialog" id="quickViewDialog" role="dialog" aria-modal="true" aria-labelledby="quickViewTitle" tabindex="-1" hidden>
+    <button type="button" class="header-icon-button quick-view-close" id="closeQuickView" aria-label="Close product details"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    <div id="quickViewDetails"></div>
+  </section>
+
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

@@ -6,9 +6,9 @@ A clean restart of the experimental UI. **This repository currently contains onl
 
 Home · Products · Notifications · My Cart · Profile
 
-Each button has a **soft, rounded 1.45px outline icon** and a matching solid icon. When you switch tabs, the glass pill slides first; the new icon then crossfades into its filled version when the pill arrives. The previous icon returns to its outline immediately. There are no visible labels, but each icon retains an accessible name.
+Each button has a **soft, rounded 1.45px outline icon** and a matching solid icon. When you switch tabs, the glass pill slides first; the new icon begins its quick 110ms fill crossfade after about 250ms, as the eased pill overlaps the destination, rather than waiting until the entire spring animation ends. The previous icon returns to its outline immediately. There are no visible labels, but each icon retains an accessible name.
 
-Tapping an icon immediately updates the selected tab and URL hash, slides the frosted bubble, then fills the destination icon on arrival. Rapid taps cancel stale icon-fill timers; browsers without the transition event use a short fallback, and reduced-motion settings fill the icon immediately. Browser Back/Forward restores the selected icon. **There are no content screens yet**; the buttons only demonstrate navigation states.
+Tapping an icon immediately updates the selected tab and URL hash, slides the frosted bubble, then fills the destination icon as the pill gets close to its final position. Rapid taps cancel stale icon-fill timers; reduced-motion settings fill the icon immediately. Browser Back/Forward restores the selected icon. **There are no content screens yet**; the buttons only demonstrate navigation states.
 
 ## Visual choices
 

@@ -9,6 +9,18 @@
   const links = [...nav.querySelectorAll("[data-route]")];
   const routes = links.map(link => link.dataset.route);
   const bubble = nav.querySelector(".nav-bubble");
+
+  // Prevent Safari's link preview / native long-press action on nav icons.
+  // Only this nav is affected; ordinary links elsewhere retain their menus.
+  nav.addEventListener("contextmenu", event => event.preventDefault());
+  nav.addEventListener("dragstart", event => event.preventDefault());
+
+  // iOS Safari may ignore maximum-scale/user-scalable viewport settings.
+  // Prevent native pinch gestures for this deliberately app-like prototype.
+  // Do not block single-finger touchmove: normal taps/scrolls stay functional.
+  const preventZoom = event => event.preventDefault();
+  document.addEventListener("gesturestart", preventZoom, { passive: false });
+  document.addEventListener("gesturechange", preventZoom, { passive: false });
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let previousIndex = null;
   let bubbleAnimation = null;

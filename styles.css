@@ -122,7 +122,7 @@ body {
   stroke-linejoin: round;
   -webkit-user-drag: none;
   pointer-events: none;
-  transition: opacity 180ms ease, transform 240ms cubic-bezier(.2, 1, .36, 1);
+  transition: opacity 110ms ease-out, transform 140ms cubic-bezier(.2, 1, .36, 1);
 }
 .nav-icon-outline { opacity: 1; transform: scale(1); }
 .nav-icon-solid {

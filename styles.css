@@ -139,8 +139,13 @@ h1 em { color: var(--green); font-style: normal; }
   z-index: 50;
   left: 50%;
   bottom: calc(2px + env(safe-area-inset-bottom, 0px));
-  width: min(calc(100% - 44px), 316px);
+  /* Expanded by default; scroll down to collapse, scroll up to expand. */
+  width: min(calc(100% - 18px), 540px);
   height: 54px;
+  transition:
+    width 580ms cubic-bezier(.20, .92, .26, 1),
+    box-shadow 420ms ease,
+    background-color 420ms ease;
   padding: 4px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -156,6 +161,14 @@ h1 em { color: var(--green); font-style: normal; }
     inset 0 1px 1px rgba(255, 255, 255, .55);
   transform: translateX(-50%);
   isolation: isolate;
+}
+.floating-nav.is-compact {
+  width: min(calc(100% - 48px), 310px);
+  background-color: rgba(243, 251, 246, .13);
+  box-shadow:
+    0 7px 19px rgba(31, 54, 37, .12),
+    0 2px 5px rgba(25, 41, 29, .04),
+    inset 0 1px 1px rgba(255, 255, 255, .55);
 }
 .nav-glass {
   position: absolute;
@@ -189,18 +202,22 @@ h1 em { color: var(--green); font-style: normal; }
   place-items: center;
   pointer-events: none;
   transform: translate3d(var(--active-translate), 0, 0);
-  transition: transform 460ms cubic-bezier(.23, 1.12, .32, 1);
+  transition: transform 480ms cubic-bezier(.22, 1.04, .34, 1);
   will-change: transform;
 }
 .floating-nav.nav-initializing .nav-indicator { transition: none; }
-/* A smaller round lens, independent of the wider glass capsule. */
+/* Restore the pill-shaped lens. Its width tracks each tab as the dock
+   expands or contracts, while its 40px height stays consistent. */
 .nav-indicator::before,
 .nav-indicator::after {
   content: "";
   position: absolute;
-  width: 40px;
+  left: 50%;
+  top: 50%;
+  width: calc(100% - 6px);
   height: 40px;
-  border-radius: 50%;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 .nav-indicator::before {
@@ -216,13 +233,13 @@ h1 em { color: var(--green); font-style: normal; }
 .nav-bubble {
   position: relative;
   z-index: 1;
-  width: 40px;
-  height: 40px;
   display: block;
+  width: calc(100% - 6px);
+  height: 40px;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 999px;
   pointer-events: none;
-  transition: transform 330ms cubic-bezier(.23, 1.1, .4, 1);
+  transition: transform 440ms cubic-bezier(.22, 1.05, .35, 1);
 }
 .nav-indicator::after {
   z-index: 2;
@@ -231,7 +248,7 @@ h1 em { color: var(--green); font-style: normal; }
   background: linear-gradient(160deg, rgba(255,255,255,.21), transparent 42%, rgba(203,236,216,.06));
 }
 .floating-nav.is-moving .nav-bubble {
-  transform: scaleX(1.075) scaleY(.97);
+  transform: scaleX(1.045) scaleY(.99);
 }
 .nav-item {
   position: relative;

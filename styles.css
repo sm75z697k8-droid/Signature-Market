@@ -163,8 +163,9 @@ h1 em { color: var(--green); font-style: normal; }
    liquid-glass.js can add an actual SVG-displaced backdrop below the controls. */
 .floating-nav.has-refraction {
   background: linear-gradient(140deg, rgba(255,255,255,.23), rgba(237,249,243,.18));
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+  /* Keep a blur beneath the optional SVG filter in case the GPU skips it. */
+  -webkit-backdrop-filter: blur(9px) saturate(140%);
+  backdrop-filter: blur(9px) saturate(140%);
 }
 .nav-refraction {
   position: absolute;

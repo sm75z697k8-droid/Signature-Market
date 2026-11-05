@@ -9,7 +9,6 @@
   const links = [...nav.querySelectorAll("[data-route]")];
   const routes = links.map(link => link.dataset.route);
   const bubble = nav.querySelector(".nav-bubble");
-  const indicator = nav.querySelector(".nav-indicator");
 
   // Prevent Safari's link preview / native long-press action on nav icons.
   // Only this nav is affected; ordinary links elsewhere retain their menus.
@@ -35,13 +34,10 @@
     links.forEach((link, i) => link.classList.toggle("is-filled", i === index));
   }
 
-  // The selected icon turns solid after the sliding glass indicator arrives.
-  // A short fallback handles browsers that omit transitionend (e.g. tab blur).
-  indicator?.addEventListener("transitionend", event => {
-    if (event.target === indicator && event.propertyName.endsWith("transform")) {
-      fillArrivedIcon(targetIndex);
-    }
-  });
+  // The pill uses a strongly eased transition and overlaps the destination
+  // before its last settling frames. Fill as it reaches the icon, not after
+  // the entire 500ms spring has finished (which previously felt sluggish).
+  const fillOnOverlapDelayMs = 250;
 
   function animateBubble(distance) {
     if (!bubble || typeof bubble.animate !== "function" || prefersReducedMotion.matches) return;
@@ -91,7 +87,7 @@
         fillArrivedIcon(index);
       } else {
         animateBubble(Math.abs(index - previousIndex));
-        fillTimer = window.setTimeout(() => fillArrivedIcon(index), 560);
+        fillTimer = window.setTimeout(() => fillArrivedIcon(index), fillOnOverlapDelayMs);
       }
     } else if (previousIndex === null) {
       fillArrivedIcon(index);

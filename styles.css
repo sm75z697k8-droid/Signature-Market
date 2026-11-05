@@ -20,12 +20,14 @@ body {
 
 .floating-nav {
   --active-offset: 0%;
+  /* Balanced around the iPhone's rounded corners: symmetric side gutters,
+     with the bottom aligned to (not inside) the Home Indicator safe area. */
   position: fixed;
   z-index: 10;
   left: 50%;
-  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  bottom: max(10px, env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
-  width: min(calc(100% - 56px), 390px);
+  width: min(calc(100% - 40px), 390px);
   height: 58px;
   padding: 6px;
   display: grid;

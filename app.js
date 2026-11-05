@@ -21,11 +21,14 @@
     const stretch = Math.min(1.23, 1.12 + (distance - 1) * 0.035);
     const squash = Math.max(0.87, 0.93 - (distance - 1) * 0.015);
 
-    // Cancel an unfinished bounce when the user selects another tab.
-    // The new animation is intentionally short, subtle and interruptible.
+    // Start from the currently rendered shape during rapid taps, so a second
+    // selection doesn't snap the first bounce back to its resting state.
+    const currentShape = bubbleAnimation
+      ? window.getComputedStyle(bubble).transform
+      : "scale(1, 1)";
     if (bubbleAnimation) bubbleAnimation.cancel();
     bubbleAnimation = bubble.animate([
-      { transform: "scale(1, 1)", offset: 0 },
+      { transform: currentShape === "none" ? "scale(1, 1)" : currentShape, offset: 0 },
       { transform: `scale(${stretch}, ${squash})`, offset: 0.30 },
       { transform: "scale(0.95, 1.06)", offset: 0.72 },
       { transform: "scale(1, 1)", offset: 1 }

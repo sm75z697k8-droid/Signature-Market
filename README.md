@@ -4,12 +4,23 @@ An **independent, unofficial** mobile-first UI/UX redesign study. It is not conn
 
 ## What's here
 
-- A new compact Home screen with delivery context, persistent search, a short featured banner, and browsable categories.
+- A compact Home screen with delivery context, persistent search, the user-supplied **11.11** campaign artwork in a featured card, and browsable categories.
+- **Deepavali Gift Sets 2026** and **Christmas Gift Sets 2026** appear as smaller secondary cards after the product picks, each linking to the official collection site.
 - Four compact product cards with original product photography linked from publicly available online images. If a host blocks an image, the card shows an accessible fallback.
 - A Products tab with category filters and working search.
 - A working **demo-only** Add to Cart interaction, item count, remove controls, and illustrative subtotal. Cart contents stay in memory and disappear on refresh. **No orders are placed.**
 - The existing five-button floating frosted-glass navigation, rounded outline/filled icons and ~430ms elastic bubble preserved without edits to its animation script.
 - Placeholder Notifications and Profile tabs, visibly marked as incomplete.
+
+## Promotional images
+
+Three locally hosted, optimized WebP previews were created from the exact campaign posters provided by the user:
+
+- `assets/campaign-11-11.webp` — 11.11 RM11 promotions (2–12 November 2026).
+- `assets/campaign-deepavali.webp` — Deepavali Gift Sets 2026.
+- `assets/campaign-christmas.webp` — Christmas Gift Sets 2026, *Wish Upon a Star*.
+
+These are **small mobile thumbnails**, not high-resolution replacements for the original posters. The images are previews, not confirmation that an offer is currently available. They are placed in cards with readable HTML headings rather than being stretched into illegible banners. The Deepavali and Christmas cards open Signature Market's official website; they do not pretend to sell those gift sets inside this demo.
 
 ## Product data / attribution
 

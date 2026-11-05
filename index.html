@@ -40,15 +40,18 @@
       <section class="app-screen home-screen" data-screen="home" aria-label="Home">
         <div class="home-intro"><p class="section-kicker">A little better, every day</p><h1>Good food, good mood.</h1></div>
 
-        <section class="hero-card" aria-label="Featured collection">
-          <div class="hero-copy">
-            <span class="hero-eyebrow">THE GOOD STUFF</span>
-            <h2>Feel-good snacks for every moment.</h2>
-            <p>Everyday favourites, thoughtfully picked.</p>
-            <button type="button" class="hero-action" data-category="snacks">Explore snacks <span aria-hidden="true">↗</span></button>
+        <section class="campaign-feature" aria-labelledby="campaign-heading">
+          <div class="campaign-feature-copy">
+            <span class="campaign-eyebrow">2–12 November 2026 · Promotion</span>
+            <h2 id="campaign-heading">11.11 deals.<br>RM11 picks.</h2>
+            <p>Once-a-year savings, in a smaller space.</p>
+            <button type="button" class="campaign-action" data-category="all">Explore sample picks <span aria-hidden="true">↗</span></button>
           </div>
-          <div class="hero-art" aria-hidden="true"><img src="https://down-my.img.susercontent.com/file/1cd3f7d12b465348fddbb6a32cd8d1eb" alt="" decoding="async"></div>
+          <div class="campaign-feature-art">
+            <img src="./assets/campaign-11-11.webp" width="190" height="248" alt="Orange Signature Market 11.11 campaign poster, advertising RM11 deals from 2 to 12 November 2026" decoding="async" fetchpriority="high">
+          </div>
         </section>
+        <p class="campaign-disclaimer">Promotional artwork supplied for this concept · Check official availability and terms.</p>
 
         <div class="section-heading"><div><p class="section-kicker">Start exploring</p><h2>Shop by category</h2></div></div>
         <div class="category-grid" role="group" aria-label="Shop by category">
@@ -61,6 +64,21 @@
         <div class="section-heading product-heading"><div><p class="section-kicker">Discover something good</p><h2>Popular picks</h2></div><a href="#products" class="text-link">See all <span aria-hidden="true">→</span></a></div>
         <p class="price-disclosure">Sample 11.11 promotion prices · Not live</p>
         <div class="product-grid" id="home-products" aria-label="Featured products"></div>
+
+        <section class="seasonal-promos" aria-labelledby="seasonal-heading">
+          <div class="section-heading seasonal-heading"><div><p class="section-kicker">A little something extra</p><h2 id="seasonal-heading">Seasonal gifting</h2></div></div>
+          <div class="seasonal-grid">
+            <a class="seasonal-card seasonal-deepavali" href="https://signaturesnack.com/my/marketplace/" target="_blank" rel="noopener noreferrer" aria-label="Browse Deepavali 2026 gift sets on the official Signature Market website">
+              <div class="seasonal-art"><img src="./assets/campaign-deepavali.webp" width="140" height="183" loading="lazy" decoding="async" alt="Deepavali Gift Sets 2026 Signature Market campaign poster with golden festive snacks"></div>
+              <div class="seasonal-copy"><span>Festive favourites</span><strong>Deepavali Gift Sets</strong><small>Official collection <span aria-hidden="true">↗</span></small></div>
+            </a>
+            <a class="seasonal-card seasonal-christmas" href="https://signaturesnack.com/my/marketplace/" target="_blank" rel="noopener noreferrer" aria-label="Browse Christmas 2026 gift sets on the official Signature Market website">
+              <div class="seasonal-art"><img src="./assets/campaign-christmas.webp" width="200" height="261" loading="lazy" decoding="async" alt="Navy Signature Market Christmas Gift Sets 2026 Wish Upon a Star campaign poster"></div>
+              <div class="seasonal-copy"><span>Thoughtful gifting</span><strong>Christmas Gift Sets</strong><small>Official collection <span aria-hidden="true">↗</span></small></div>
+            </a>
+          </div>
+          <p class="seasonal-caption">The cards open the official Signature Market website; gifting products are not part of this demo catalog.</p>
+        </section>
 
         <div class="home-ending"><span class="home-ending-icon" aria-hidden="true">✳</span><div><strong>Small choices, better days.</strong><p>Explore the collection and find your next favourite.</p></div><a href="#products" aria-label="Explore all products">→</a></div>
       </section>
